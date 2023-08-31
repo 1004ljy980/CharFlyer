@@ -1,0 +1,5 @@
+@use '@/app/styles/themes.scss' as themes;
+
+.header {
+  height: themes.$headerSize;
+}

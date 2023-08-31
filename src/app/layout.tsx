@@ -1,9 +1,13 @@
-import './globals.css';
+// 스타일
+import '@/app/globals.css';
+import styles from '@/app/layout.module.scss';
+
+// 메타 데이터
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '캐플라이어',
-  description: '캐릭터들과 알아가는 이야기',
+  description: '캐릭터, 굿즈는 여기서 찾아보세요!',
 };
 
 export default function RootLayout({
@@ -13,7 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <header className={styles.header}>
+          <h1>캐플라이어</h1>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
