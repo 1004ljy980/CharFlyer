@@ -1,9 +1,15 @@
 // color
 $mainColor: #f5cd6d;
 $subColor: #f7e590;
+// 요소 색상
+$fontColor: #444444;
+$whiteColor: #ffffff;
+$borderColor: #999999;
+$placeholderColor: #aaaaaa;
+$shadowColor: #dddddd;
 
 // typography
-$fontFamily: 'Pretendard';
+$fontFamily: 'Pretendard Variable';
 $titleFontSize: 3rem;
 $subTitleSize: 2rem;
 
@@ -15,4 +21,6 @@ $mediumSpacing: 4rem;
 $largeSpacing: 8rem;
 
 // containerSize
-$headerSize: 3rem;
+$contentMaxWidth: 1200px;
+$headerHeight: 3.5rem;
+$footerHeight: 30rem;
