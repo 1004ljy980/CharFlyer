@@ -1,0 +1,37 @@
+@use '@/app/styles/themes.scss' as themes;
+
+.main {
+  section {
+    box-sizing: border-box;
+    padding: themes.$largeSpacing 0;
+  }
+  section:nth-child(2n + 1) {
+    background: themes.$mainColor;
+  }
+  .bannerSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: themes.$mainContainerHeight;
+
+    div {
+      height: 350px;
+    }
+  }
+  .searchingSection {
+    height: themes.$mainContainerHeight;
+
+    .searchTitle {
+      font-size: themes.$titleFontSize;
+    }
+    .searchSubTitle {
+      font-size: themes.$subTitleFontSize;
+    }
+  }
+  .recommendedSection {
+    height: themes.$mainContainerHeight;
+  }
+  .randomSearchingSection {
+  }
+}

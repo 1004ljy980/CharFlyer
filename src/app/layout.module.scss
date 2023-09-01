@@ -1,16 +1,20 @@
 @use '@/app/styles/themes.scss' as themes;
 
+// CSS 컨벤션을 따를 것
 .header {
-  font-family: themes.$fontFamily;
-
+  // 레이아웃
+  display: flex;
+  justify-content: center;
   position: sticky;
   top: 0;
   height: themes.$headerHeight;
+
+  // 테두리, 배경
   box-shadow: 0px 2px 5px 0px themes.$shadowColor;
   background-color: themes.$whiteColor;
 
-  display: flex;
-  justify-content: center;
+  //폰트
+  font-family: themes.$fontFamily;
 
   .container {
     display: flex;
@@ -20,21 +24,21 @@
     max-width: themes.$contentMaxWidth;
 
     .logo {
-      margin-left: themes.$littleSpacing;
+      margin-left: themes.$mediumTextSpacing;
     }
     .leftContainer {
-      margin-left: themes.$smallSpacing;
+      margin-left: themes.$mediumTextSpacing;
       li {
         display: inline-block;
-        margin-right: themes.$smallSpacing;
+        margin-right: themes.$mediumTextSpacing;
       }
     }
     .rightContainer {
       margin-left: auto;
-      margin-right: themes.$smallSpacing;
+      margin-right: themes.$mediumSpacing;
       li {
         display: inline-block;
-        margin-left: themes.$smallSpacing;
+        margin-left: themes.$mediumTextSpacing;
       }
     }
   }

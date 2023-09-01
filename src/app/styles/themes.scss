@@ -11,16 +11,20 @@ $shadowColor: #dddddd;
 // typography
 $fontFamily: 'Pretendard Variable';
 $titleFontSize: 3rem;
-$subTitleSize: 2rem;
+$subTitleFontSize: 1.5rem;
 
 // spacing
-$tinySpacing: 0.75rem;
-$littleSpacing: 1rem;
-$smallSpacing: 2rem;
-$mediumSpacing: 4rem;
-$largeSpacing: 8rem;
+$tinyTextSpacing: 0.75rem;
+$smallTextSpacing: 1rem;
+$mediumTextSpacing: 2rem;
+$largeTextSpacing: 4rem;
+$tinySpacing: 16px;
+$smallSpacing: 24px;
+$mediumSpacing: 52px;
+$largeSpacing: 96px;
 
 // containerSize
 $contentMaxWidth: 1200px;
 $headerHeight: 3.5rem;
 $footerHeight: 30rem;
+$mainContainerHeight: 1000px;
