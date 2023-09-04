@@ -2,6 +2,9 @@
 
 .main {
   section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     box-sizing: border-box;
     padding: themes.$largeSpacing 0;
   }
@@ -9,29 +12,66 @@
     background: themes.$mainColor;
   }
   .bannerSection {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
 
     height: themes.$mainContainerHeight;
 
     div {
+      width: 100vw;
       height: 350px;
     }
   }
   .searchingSection {
     height: themes.$mainContainerHeight;
 
+    span {
+      font-weight: 500;
+    }
     .searchTitle {
+      margin-bottom: themes.$smallTextSpacing;
+
       font-size: themes.$titleFontSize;
     }
     .searchSubTitle {
+      margin-bottom: themes.$smallTextSpacing;
+
       font-size: themes.$subTitleFontSize;
+    }
+    .searchBox {
+      width: 700px;
+      height: themes.$titleFontSize;
+      word-break: break-all;
+
+      margin-bottom: themes.$mediumSpacing;
+    }
+    .boatBox {
+      flex-grow: 1;
+      width: 1000px;
     }
   }
   .recommendedSection {
     height: themes.$mainContainerHeight;
+    p {
+      margin-bottom: themes.$mediumSpacing;
+
+      color: themes.$whiteColor;
+      font-size: themes.$titleFontSize;
+    }
+    .recommendedBox {
+      flex-grow: 1;
+      width: 100vw;
+    }
   }
   .randomSearchingSection {
+    p {
+      margin-bottom: themes.$mediumSpacing;
+
+      font-size: themes.$subTitleFontSize;
+    }
+    .backgroundLine {
+      height: 25px;
+      width: themes.$contentMaxWidth;
+      background-color: themes.$mainColor;
+    }
   }
 }

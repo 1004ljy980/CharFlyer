@@ -45,5 +45,13 @@
 }
 
 .footer {
+  display: flex;
+  justify-content: center;
   height: themes.$footerHeight;
+
+  border-top: 1px solid themes.$borderColor;
+  .footerContent {
+    flex: 1;
+    max-width: themes.$contentMaxWidth;
+  }
 }
