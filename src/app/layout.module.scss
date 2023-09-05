@@ -10,7 +10,7 @@
   height: themes.$headerHeight;
 
   // 테두리, 배경
-  box-shadow: 0px 2px 5px 0px themes.$shadowColor;
+  border-bottom: 1px solid themes.$borderColor;
   background-color: themes.$whiteColor;
 
   //폰트
@@ -26,11 +26,26 @@
     .logo {
       margin-left: themes.$mediumTextSpacing;
     }
+    h1 {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: polygon(0 0, 0 0, 0 0);
+    }
     .leftContainer {
       margin-left: themes.$mediumTextSpacing;
       li {
         display: inline-block;
         margin-right: themes.$mediumTextSpacing;
+
+        .link {
+          text-decoration: none;
+
+          color: themes.$blackColor;
+          font-size: themes.$linkfontSize;
+        }
       }
     }
     .rightContainer {
@@ -39,6 +54,22 @@
       li {
         display: inline-block;
         margin-left: themes.$mediumTextSpacing;
+
+        .loginLink {
+          text-decoration: none;
+
+          color: themes.$fontColor;
+        }
+        .registerLink {
+          padding: themes.$microTextSpacing themes.$smallTextSpacing;
+
+          border-radius: 1rem;
+          background-color: themes.$mainColor;
+
+          text-decoration: none;
+          color: themes.$whiteColor;
+          font-weight: 500;
+        }
       }
     }
   }
@@ -48,10 +79,55 @@
   display: flex;
   justify-content: center;
   height: themes.$footerHeight;
+  padding: themes.$smallSpacing 0;
 
   border-top: 1px solid themes.$borderColor;
+
+  font-family: themes.$fontFamily;
   .footerContent {
     flex: 1;
     max-width: themes.$contentMaxWidth;
+
+    color: themes.$grayColor;
+
+    .logo {
+      margin-bottom: themes.$tinySpacing;
+    }
+    .footerTable {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .leftContainer {
+        display: flex;
+        flex-direction: column;
+
+        div {
+          p {
+            margin-bottom: themes.$tinySpacing;
+          }
+        }
+        p:nth-last-child(1) {
+          margin-top: auto;
+        }
+      }
+    }
+    .rightContainer {
+      .subtitle {
+        font-size: themes.$subTitleFontSize;
+        margin-bottom: themes.$tinySpacing;
+      }
+      .supportTable {
+        display: grid;
+        grid-template-columns: 1fr 5fr 10fr;
+        margin-top: themes.$tinySpacing;
+
+        p {
+          margin-bottom: themes.$tinySpacing;
+
+          span {
+          }
+        }
+      }
+    }
   }
 }
