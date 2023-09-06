@@ -2,6 +2,7 @@
 
 // CSS 컨벤션을 따를 것
 .header {
+  z-index: 9999;
   // 레이아웃
   display: flex;
   justify-content: center;
@@ -78,8 +79,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  height: themes.$footerHeight;
-  padding: themes.$smallSpacing 0;
+  padding: themes.$mediumSpacing 0;
 
   border-top: 1px solid themes.$borderColor;
 
@@ -121,11 +121,8 @@
         grid-template-columns: 1fr 5fr 10fr;
         margin-top: themes.$tinySpacing;
 
-        p {
+        p:not(:nth-last-child(-n + 2)) {
           margin-bottom: themes.$tinySpacing;
-
-          span {
-          }
         }
       }
     }

@@ -1,0 +1,173 @@
+@use '@/app/styles/themes.scss' as themes;
+
+// SearchBar Style
+.searchContainer {
+  display: flex;
+  height: 100%;
+
+  color: themes.$fontColor;
+
+  .searchIconBox {
+    flex: 1;
+    padding: themes.$microSpacing;
+
+    .searchIcon {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .searchInputBox {
+    flex: 10;
+
+    border-radius: 30px;
+    border: 1px solid themes.$borderColor;
+
+    .searchInput {
+      position: relative;
+      top: 10%;
+      left: 3%;
+
+      box-sizing: border-box;
+      width: 90%;
+      height: 80%;
+
+      border: 0;
+
+      font-size: 1.5rem;
+
+      &:focus {
+        outline: 0;
+      }
+      &::placeholder {
+        color: themes.$placeholderColor;
+      }
+    }
+  }
+}
+
+// RecommendedList Style
+.recommendedContainer {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+
+  div {
+    position: relative;
+    width: 20%;
+
+    .recommendedAirplane {
+      cursor: pointer;
+    }
+  }
+}
+
+// Home Style
+.main {
+  display: flex;
+  flex-direction: column;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: themes.$largeSpacing 0;
+  }
+  section:nth-child(2n + 1) {
+    background: themes.$mainColor;
+  }
+  .bannerSection {
+    justify-content: space-between;
+
+    height: themes.$mainContainerHeight;
+
+    div {
+      width: 100%;
+      height: 350px;
+    }
+  }
+  .searchingSection {
+    align-self: center;
+    width: 100%;
+    max-width: themes.$contentMaxWidth;
+    height: themes.$mainContainerHeight;
+
+    span {
+      font-weight: 500;
+    }
+    .searchTitle {
+      margin-bottom: themes.$smallTextSpacing;
+
+      font-size: themes.$titleFontSize;
+    }
+    .searchSubTitle {
+      margin-bottom: themes.$mediumTextSpacing;
+
+      font-size: themes.$subTitleFontSize;
+    }
+    .searchBox {
+      width: 65%;
+      height: 4rem;
+
+      margin-bottom: themes.$mediumSpacing;
+    }
+    .boatBox {
+      position: relative;
+      flex-grow: 1;
+      width: 85%;
+
+      .surface {
+        z-index: -1;
+        position: absolute;
+        top: 45%;
+        left: 11%;
+        width: 80%;
+        height: 50%;
+
+        background-color: themes.$mainColor;
+        border-radius: 100%;
+        filter: blur(50px);
+      }
+    }
+  }
+  .recommendedSection {
+    height: themes.$mainContainerHeight;
+    p {
+      margin-bottom: themes.$mediumSpacing;
+
+      color: themes.$whiteColor;
+      font-size: themes.$titleFontSize;
+    }
+    .recommendedBox {
+      flex-grow: 1;
+      width: 100%;
+    }
+  }
+  .randomSearchingSection {
+    align-self: center;
+    position: relative;
+    width: 100%;
+    max-width: themes.$contentMaxWidth;
+    padding-bottom: calc(themes.$largeSpacing + themes.$mediumSpacing);
+
+    p {
+      margin-bottom: themes.$largeSpacing;
+
+      color: themes.$mainColor;
+      font-size: themes.$subTitleFontSize;
+    }
+    .backgroundLine {
+      height: 25px;
+      width: 100%;
+      background-color: themes.$mainColor;
+    }
+    .randomAirplaneBox {
+      position: absolute;
+      top: 41%;
+      width: 400px;
+      height: 150px;
+
+      cursor: pointer;
+    }
+  }
+}
