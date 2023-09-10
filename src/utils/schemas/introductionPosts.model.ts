@@ -20,12 +20,16 @@ const IntroductionPostsSchema = new Schema(
       type: String,
       required: true,
     },
+    summary: {
+      type: String,
+      maxlength: 100,
+    },
     category: {
       type: String,
       required: true,
     },
     tags: {
-      type: Array,
+      type: Array<String>,
     },
     views: {
       type: Number,

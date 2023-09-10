@@ -10,15 +10,20 @@ const UsersSchema = new Schema(
     profileImage: {
       type: String,
     },
-    introducition: {
+    introduction: {
       type: String,
       maxlength: 100,
     },
     introductionPostsList: {
-      type: Array,
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'IntroductionPost',
+        },
+      ],
     },
     preferredTags: {
-      type: Array,
+      type: Array<String>,
     },
   },
   {
