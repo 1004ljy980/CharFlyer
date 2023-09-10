@@ -7,7 +7,7 @@ interface IntroductionPost {
   content: string;
   summary: string;
   category: string;
-  tags: string[];
+  tags: Array<String>;
   views: number;
   timestamps: string;
 }

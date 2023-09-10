@@ -1,7 +1,16 @@
 import { Schema, models, model } from 'mongoose';
 
+// email, password 64자는 프론트엔드에서 관리. (password는 해쉬값이 들어 갈 것)
 const UsersSchema = new Schema(
   {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

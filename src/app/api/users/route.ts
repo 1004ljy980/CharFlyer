@@ -1,12 +1,22 @@
+import { TypeUser } from '@/types/interfaces/User.interface';
 import dbConnect from '@/utils/db/dbConnection';
 import User from '@/utils/schemas/users.model';
+import { Model } from 'mongoose';
 import { NextResponse } from 'next/server';
+
+async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {
+  try {
+    await dbConnect();
+    return User;
+  } catch (error) {
+    console.error('DB 연결 에러 : ' + error);
+  }
+}
 
 export async function GET() {
   try {
-    await dbConnect();
-    const Users = User;
-    const data = await Users.find({});
+    const Users = await connectToDatabase();
+    const data = await Users?.find({});
 
     return NextResponse.json({ data });
   } catch (error) {
@@ -15,5 +25,15 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  return NextResponse.json(await request.json());
+  try {
+    const Users = await connectToDatabase();
+    const data = await request.json();
+    const created = await Users?.create({
+      ...data,
+    });
+
+    return NextResponse.json(created);
+  } catch (error) {
+    console.error(error);
+  }
 }
