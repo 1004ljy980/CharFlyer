@@ -3,6 +3,10 @@ import { BsSearch } from 'react-icons/bs';
 
 import Image from 'next/image';
 
+// 데이터는 해당 page에서 받아들이고, 나머지 컴포넌트는 client component로 옮겨야 함.(이벤트 필요)
+// 단, 서버 컴포넌트와 클라이언트 컴포넌트는 네트워크 경계를 나누고 있으므로 직렬화가 필요함.
+// https://velog.io/@brgndy/React-Server-vs-Client-Component-in-Next.js-13-%ED%95%B4%EC%84%9D
+
 const BannerList = () => {
   return <></>;
 };
@@ -109,6 +113,7 @@ export default function Home() {
           <div className={styles.backgroundLine}></div>
           <div className={styles.randomAirplaneBox}>
             <Image
+              className={styles.randomAirplane}
               src="/image/paper_airplane_only.png"
               fill={true}
               style={{ objectFit: 'contain' }}
