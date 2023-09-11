@@ -1,20 +1,26 @@
 import { ObjectId } from 'mongoose';
 
 interface IntroductionPost {
-  author: ObjectId;
-  title: string;
-  thumbnail: string;
-  content: string;
-  summary: string;
-  category: string;
+  introductionPostId: String;
+  authorId: ObjectId;
+  authorName: String;
+  authorImage: String;
+  title: String;
+  thumbnail: String;
+  content: String;
+  summary: String;
+  category: String;
   tags: Array<String>;
-  views: number;
-  timestamps: string;
+  views: Number;
+  timestamps: String;
 }
 
 export type TypeIntroductionPostList = Pick<
   IntroductionPost,
-  | 'author'
+  | 'introductionPostId'
+  | 'authorId'
+  | 'authorName'
+  | 'authorImage'
   | 'title'
   | 'thumbnail'
   | 'summary'
@@ -26,7 +32,10 @@ export type TypeIntroductionPostList = Pick<
 
 export type TypeIntroductionPost = Pick<
   IntroductionPost,
-  | 'author'
+  | 'introductionPostId'
+  | 'authorId'
+  | 'authorName'
+  | 'authorImage'
   | 'title'
   | 'thumbnail'
   | 'content'

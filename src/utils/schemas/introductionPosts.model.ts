@@ -2,7 +2,12 @@ import { Schema, models, model } from 'mongoose';
 
 const IntroductionPostsSchema = new Schema(
   {
-    author: {
+    introductionPostId: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    authorId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
@@ -26,6 +31,7 @@ const IntroductionPostsSchema = new Schema(
     },
     category: {
       type: String,
+      enum: ['character', 'goods'],
       required: true,
     },
     tags: {
