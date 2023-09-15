@@ -1,20 +1,15 @@
-import {
-  TypeIntroductionPost,
-  TypeIntroductionPostList,
-} from '@/types/interfaces/introductionPost.interface';
 import dbConnect from '@/utils/db/dbConnection';
 import {
   AdjustTypes,
   adjustSequenceValue,
 } from '@/utils/schemas/counter.model';
-import IntroductionPost from '@/utils/schemas/introductionPosts.model';
+import IntroductionPost, {
+  TypeIntroductionPost,
+} from '@/utils/schemas/introductionPosts.model';
 import User from '@/utils/schemas/users.model';
-import { Model } from 'mongoose';
 import { NextResponse } from 'next/server';
 
-async function connectToDatabase(): Promise<
-  Model<TypeIntroductionPost> | undefined
-> {
+async function connectToDatabase() {
   try {
     // 데이터베이스와 연결합니다.
     await dbConnect();
@@ -31,14 +26,31 @@ export async function GET() {
     const IntroductionPosts = await connectToDatabase();
     User;
 
-    const data = await IntroductionPosts?.find({})
-      .populate('authorId', 'name profileImage') // author 필드를 populate하고, name과 profileImage 필드만 선택
+    // 비동기 타입 지정 as 사용
+    const data = (await IntroductionPosts?.find({})
+      .populate('author', 'name profileImage')
       .select(
-        'introductionPostId authorId title thumbnail summary category tags views timestamps'
+        'introductionPostId author title thumbnail summary content category tags views timestamps createdAt'
       )
-      .exec();
+      .exec()) as TypeIntroductionPost[];
 
-    return NextResponse.json({ ...data });
+    // 프론트엔드 인터페이스에 맞게 데이터 가공
+    const modifiedData = data.map((post) => ({
+      introductionPostId: post.introductionPostId,
+      authorId: post.author._id,
+      authorName: post.author.name,
+      authorImage: post.author.profileImage,
+      title: post.title,
+      thumbnail: post.thumbnail,
+      content: post.content,
+      summary: post.summary,
+      category: post.category,
+      tags: post.tags,
+      views: post.views,
+      timestamps: post.createdAt,
+    }));
+
+    return NextResponse.json(modifiedData);
   } catch (error) {
     console.error(error);
   }
