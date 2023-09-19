@@ -22,11 +22,10 @@
     flex: 1;
     align-items: center;
 
+    box-sizing: border-box;
     max-width: themes.$contentMaxWidth;
+    padding: 0 themes.$mediumTextSpacing;
 
-    .logo {
-      margin-left: themes.$mediumTextSpacing;
-    }
     h1 {
       position: absolute;
       width: 1px;
@@ -51,7 +50,6 @@
     }
     .rightContainer {
       margin-left: auto;
-      margin-right: themes.$mediumSpacing;
       li {
         display: inline-block;
         margin-left: themes.$mediumTextSpacing;

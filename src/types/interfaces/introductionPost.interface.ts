@@ -1,4 +1,5 @@
 interface IntroductionPost {
+  id: String;
   introductionPostId: String;
   authorId: String;
   authorName: String;
@@ -15,6 +16,7 @@ interface IntroductionPost {
 
 export type TypeIntroductionPostList = Pick<
   IntroductionPost,
+  | 'id'
   | 'introductionPostId'
   | 'authorId'
   | 'authorName'
@@ -30,6 +32,7 @@ export type TypeIntroductionPostList = Pick<
 
 export type TypeIntroductionPostDetail = Pick<
   IntroductionPost,
+  | 'id'
   | 'introductionPostId'
   | 'authorId'
   | 'authorName'

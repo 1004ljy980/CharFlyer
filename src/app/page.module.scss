@@ -83,7 +83,8 @@
 
     div {
       width: 100%;
-      height: 350px;
+      max-width: themes.$maxWidth;
+      height: 300px;
     }
   }
   .searchingSection {
@@ -141,6 +142,7 @@
     .recommendedBox {
       flex-grow: 1;
       width: 100%;
+      max-width: themes.$maxWidth;
     }
   }
   .randomSearchingSection {

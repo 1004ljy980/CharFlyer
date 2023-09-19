@@ -1,5 +1,5 @@
 import dbConnect from '@/utils/db/dbConnection';
-import IntroductionPost from '@/utils/schemas/introductionPosts.model';
+import IntroductionPost from '@/schemas/introductionPosts.model';
 import { NextResponse } from 'next/server';
 
 export async function GET() {

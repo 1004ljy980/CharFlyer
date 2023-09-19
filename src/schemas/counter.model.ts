@@ -1,6 +1,6 @@
 import mongoose, { models, Schema } from 'mongoose';
 
-// Auto Increment를 구현하기 위한 코드
+// Auto Increment를 구현하기 위한 Scheme
 
 export const CounterSchema = new Schema({
   _id: {
@@ -42,16 +42,6 @@ export async function adjustSequenceValue(
       );
       break;
   }
-
-  return sequenceDocument.seq;
-}
-
-export async function backSequenceValue(sequenceName: string) {
-  const sequenceDocument = await Counter.findByIdAndUpdate(
-    sequenceName,
-    { $inc: { seq: -1 } },
-    { new: true, upsert: true }
-  );
 
   return sequenceDocument.seq;
 }

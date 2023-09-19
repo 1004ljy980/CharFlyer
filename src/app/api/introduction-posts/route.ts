@@ -1,12 +1,9 @@
 import dbConnect from '@/utils/db/dbConnection';
-import {
-  AdjustTypes,
-  adjustSequenceValue,
-} from '@/utils/schemas/counter.model';
+import { AdjustTypes, adjustSequenceValue } from '@/schemas/counter.model';
 import IntroductionPost, {
   TypeIntroductionPost,
-} from '@/utils/schemas/introductionPosts.model';
-import User from '@/utils/schemas/users.model';
+} from '@/schemas/introductionPosts.model';
+import User from '@/schemas/users.model';
 import { NextResponse } from 'next/server';
 
 async function connectToDatabase() {
@@ -26,16 +23,17 @@ export async function GET() {
     const IntroductionPosts = await connectToDatabase();
     User;
 
-    // 비동기 타입 지정 as 사용
+    // 타입스크립트가 유추한 Omit<any, never>타입 대신, 타입 단언 as 사용
     const data = (await IntroductionPosts?.find({})
       .populate('author', 'name profileImage')
       .select(
         'introductionPostId author title thumbnail summary content category tags views timestamps createdAt'
       )
-      .exec()) as TypeIntroductionPost[];
+      .exec()) as TypeIntroductionPost[] | undefined;
 
     // 프론트엔드 인터페이스에 맞게 데이터 가공
-    const modifiedData = data.map((post) => ({
+    const modifiedData = data?.map((post) => ({
+      id: post._id,
       introductionPostId: post.introductionPostId,
       authorId: post.author._id,
       authorName: post.author.name,

@@ -2,14 +2,12 @@ import styles from './page.module.scss';
 import { BsSearch } from 'react-icons/bs';
 
 import Image from 'next/image';
+import BannerList from './components/BannerList';
+import { getIntroductionPostsList } from '@/utils/api/Fetcher';
 
 // 데이터는 해당 page에서 받아들이고, 나머지 컴포넌트는 client component로 옮겨야 함.(이벤트 필요)
 // 단, 서버 컴포넌트와 클라이언트 컴포넌트는 네트워크 경계를 나누고 있으므로 직렬화가 필요함.
 // https://velog.io/@brgndy/React-Server-vs-Client-Component-in-Next.js-13-%ED%95%B4%EC%84%9D
-
-const BannerList = () => {
-  return <></>;
-};
 
 const SearchBar = () => {
   return (
@@ -61,17 +59,26 @@ const RecommendedList = () => {
   );
 };
 
-export default function Home() {
+export default async function Home() {
+  const bannerData = await getIntroductionPostsList();
+  console.log(bannerData);
+
   return (
     <>
       <main className={styles.main}>
         <section className={styles.bannerSection}>
-          <div>
-            <BannerList />
-          </div>
-          <div>
-            <BannerList />
-          </div>
+          {bannerData ? (
+            <>
+              <div>
+                <BannerList postList={bannerData} />
+              </div>
+              <div>
+                <BannerList postList={bannerData} />
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </section>
         <section className={styles.searchingSection}>
           <p className={styles.searchTitle}>
