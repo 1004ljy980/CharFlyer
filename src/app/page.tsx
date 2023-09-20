@@ -34,6 +34,7 @@ const RecommendedList = () => {
           src="/image/paper_airplane_only_45deg.png"
           fill={true}
           style={{ objectFit: 'contain' }}
+          sizes="100%"
           alt="추천 종이비행기 첫 번째"
         />
       </div>
@@ -42,6 +43,7 @@ const RecommendedList = () => {
           className={styles.recommendedAirplane}
           src="/image/paper_airplane_only_45deg.png"
           fill={true}
+          sizes="100%"
           style={{ objectFit: 'contain' }}
           alt="추천 종이비행기 두 번째"
         />
@@ -51,6 +53,7 @@ const RecommendedList = () => {
           className={styles.recommendedAirplane}
           src="/image/paper_airplane_only_45deg.png"
           fill={true}
+          sizes="100%"
           style={{ objectFit: 'contain' }}
           alt="추천 종이비행기 세 번째"
         />
@@ -92,20 +95,20 @@ export default async function Home() {
           </div>
           <div className={styles.boatBox}>
             {/* 배경 이미지 */}
-            <div className={styles.boatSizeBox}>
-              <Image
-                src="/image/paper_boat.png"
-                fill={true}
-                style={{ objectFit: 'contain' }}
-                alt="종이배"
-              />
-              <Image
-                src="/image/paper_boat_wave.png"
-                fill={true}
-                style={{ objectFit: 'contain' }}
-                alt="수면"
-              />
-            </div>
+            <Image
+              src="/image/paper_boat.png"
+              fill={true}
+              style={{ objectFit: 'contain' }}
+              sizes="100%"
+              alt="종이배"
+            />
+            <Image
+              src="/image/paper_boat_wave.png"
+              fill={true}
+              style={{ objectFit: 'contain' }}
+              sizes="100%"
+              alt="수면"
+            />
             <div className={styles.surface}></div>
           </div>
         </section>
@@ -124,7 +127,8 @@ export default async function Home() {
               src="/image/paper_airplane_only.png"
               fill={true}
               style={{ objectFit: 'contain' }}
-              alt="수면"
+              sizes="100%"
+              alt="종이비행기 랜덤 탐색"
             />
           </div>
         </section>

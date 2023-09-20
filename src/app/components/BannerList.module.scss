@@ -1,0 +1,71 @@
+@use '@/app/styles/themes.scss' as themes;
+
+// 비행기 개수, 비율
+$airplaneAmount: 20;
+$airplaneRatioInWrap: 4;
+
+.listWrap {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+
+  .airplanList {
+    white-space: nowrap;
+
+    &.original {
+      background-color: aqua;
+
+      animation: 10s linear infinite normal none running originalSlide;
+    }
+    &.clone {
+      position: absolute;
+      left: themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount);
+
+      background-color: deeppink;
+
+      animation: 10s linear infinite normal none running cloneSlide;
+    }
+    &.stop {
+    }
+
+    .airplane {
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      width: themes.$maxWidth / $airplaneRatioInWrap;
+
+      .airplaneImage {
+      }
+    }
+  }
+}
+
+@keyframes originalSlide {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(
+      -1 * themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount)
+    );
+  }
+  50.1% {
+    transform: translateX(
+      themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount)
+    );
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes cloneSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(
+      -2 * themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount)
+    );
+  }
+}

@@ -9,21 +9,22 @@ import Image from 'next/image';
 
 export default function BannerList({
   postList,
+  isFlip = false,
 }: {
   postList: Array<TypeIntroductionPostList>;
+  isFlip?: boolean;
 }) {
   // 마우스가 올라갔을 때 애니메이션을 멈추기 위한 상태
   const [stop, setStop] = useState(false);
   const onStop = () => setStop(true);
   const onRun = () => setStop(false);
 
-  console.log(postList);
-
   // 20개의 비행기로 리스트가 구성됩니다.
   const airplaneList: Array<TypeIntroductionPostList> = [];
-  for (let i = 0; i < 20; i++) {
-    let j = 0;
-    j++ < postList.length ? airplaneList.push(postList[j]) : (j = 0);
+
+  for (let i = 0, j = 0; i < 20; i++) {
+    j == postList.length && (j = 0);
+    airplaneList.push(postList[j++]);
   }
 
   enum AirplaneListTypes {
@@ -35,7 +36,7 @@ export default function BannerList({
   const AirplaineList = ({ listType }: { listType: AirplaneListTypes }) => {
     const listClasses = [
       styles.airplanList,
-      stop && styles.stop,
+      stop ? styles.stop : '',
       listType == AirplaneListTypes.Original ? styles.original : styles.clone,
     ].join(' ');
 
@@ -45,10 +46,12 @@ export default function BannerList({
           return (
             <div key={index} className={styles.airplane}>
               <Image
-                src="/image/paper_boat.png"
+                className={styles.airplaneImage}
+                src="/image/paper_airplane.png"
                 fill={true}
-                style={{ objectFit: 'contain' }}
-                alt={`종이비행기 ${airplane.title}`}
+                style={{ objectFit: 'cover' }}
+                sizes="100%"
+                alt="추천 종이비행기 첫 번째"
               />
             </div>
           );
