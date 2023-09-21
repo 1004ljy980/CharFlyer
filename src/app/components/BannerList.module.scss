@@ -4,37 +4,48 @@
 $airplaneAmount: 20;
 $airplaneRatioInWrap: 4;
 
+.flip {
+  transform: scaleX(-1);
+}
+
 .listWrap {
   display: flex;
   position: relative;
   overflow: hidden;
 
-  .airplanList {
+  .airplaneList {
     white-space: nowrap;
 
     &.original {
-      background-color: aqua;
-
       animation: 10s linear infinite normal none running originalSlide;
     }
     &.clone {
       position: absolute;
       left: themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount);
-
-      background-color: deeppink;
+      height: 100%;
 
       animation: 10s linear infinite normal none running cloneSlide;
     }
     &.stop {
+      animation-play-state: paused;
     }
 
     .airplane {
       display: inline-block;
       position: relative;
-      box-sizing: border-box;
       width: themes.$maxWidth / $airplaneRatioInWrap;
+      height: 100%;
 
       .airplaneImage {
+        box-sizing: border-box;
+        padding: themes.$smallSpacing;
+      }
+      .thumbnail {
+        position: relative;
+        width: 27.7%;
+        height: 45%;
+        left: 36.5%;
+        top: 13.5%;
       }
     }
   }
@@ -49,7 +60,7 @@ $airplaneRatioInWrap: 4;
       -1 * themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount)
     );
   }
-  50.1% {
+  50.01% {
     transform: translateX(
       themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount)
     );

@@ -76,7 +76,7 @@ export default async function Home() {
                 <BannerList postList={bannerData} />
               </div>
               <div>
-                <BannerList postList={bannerData} />
+                <BannerList postList={bannerData} isFlip={true} />
               </div>
             </>
           ) : (
