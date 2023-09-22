@@ -64,19 +64,19 @@ const RecommendedList = () => {
 
 export default async function Home() {
   const bannerData = await getIntroductionPostsList();
-  console.log(bannerData);
 
   return (
     <>
       <main className={styles.main}>
         <section className={styles.bannerSection}>
+          <p className={styles.bannerText}>캐릭터들이 찾아오고 있어요.</p>
           {bannerData ? (
             <>
               <div>
-                <BannerList postList={bannerData} />
+                <BannerList postList={bannerData} isFlip={true} />
               </div>
               <div>
-                <BannerList postList={bannerData} isFlip={true} />
+                <BannerList postList={bannerData} />
               </div>
             </>
           ) : (

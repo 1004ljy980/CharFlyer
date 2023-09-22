@@ -17,17 +17,21 @@ $airplaneRatioInWrap: 4;
     white-space: nowrap;
 
     &.original {
-      animation: 10s linear infinite normal none running originalSlide;
+      animation: 120s linear infinite normal none running originalSlide;
     }
     &.clone {
       position: absolute;
       left: themes.$maxWidth / $airplaneRatioInWrap * ($airplaneAmount);
       height: 100%;
 
-      animation: 10s linear infinite normal none running cloneSlide;
+      animation: 120s linear infinite normal none running cloneSlide;
     }
     &.stop {
       animation-play-state: paused;
+    }
+
+    .polaroidUp {
+      transform: translateY(-15px);
     }
 
     .airplane {
@@ -35,6 +39,8 @@ $airplaneRatioInWrap: 4;
       position: relative;
       width: themes.$maxWidth / $airplaneRatioInWrap;
       height: 100%;
+
+      cursor: pointer;
 
       .airplaneImage {
         box-sizing: border-box;
@@ -46,6 +52,35 @@ $airplaneRatioInWrap: 4;
         height: 45%;
         left: 36.5%;
         top: 13.5%;
+      }
+
+      .able {
+        visibility: visible;
+      }
+
+      .unable {
+        visibility: hidden;
+      }
+
+      .bubble {
+        position: relative;
+        height: 100%;
+        width: 80%;
+        left: 10%;
+        top: -100%;
+        p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          left: 15%;
+          top: 68%;
+          width: 70%;
+          height: themes.$titleFontSize;
+
+          font-size: themes.$subTitleFontSize;
+          text-overflow: ellipsis;
+        }
       }
     }
   }

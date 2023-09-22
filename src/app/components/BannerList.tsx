@@ -2,7 +2,7 @@
 
 import styles from './BannerList.module.scss';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
 
 import Image from 'next/image';
@@ -30,51 +30,151 @@ export default function BannerList({
     ' '
   );
 
-  const Airplane = ({
-    index,
-    airplane,
-  }: {
-    index: number;
-    airplane: TypeIntroductionPostList;
-  }) => {
-    return (
-      <li
-        key={index}
-        className={styles.airplane}
-        onMouseEnter={onStop}
-        onMouseLeave={onRun}
-      >
-        <Image
-          className={styles.airplaneImage}
-          src="/image/paper_airplane.png"
-          fill={true}
-          style={{ objectFit: 'contain' }}
-          sizes="100%"
-          alt={`${airplane.title}`}
-        />
-        <div className={`${styles.thumbnail} ${isFlip ? styles.flip : ''}`}>
-          <Image
-            src={`${airplane.thumbnail}`}
-            fill={true}
-            style={{ objectFit: 'cover' }}
-            sizes="100%"
-            alt={`${airplane.title}의 소개 사진`}
-          />
-        </div>
-      </li>
-    );
-  };
-
   return (
     <div className={`${styles.listWrap} ${isFlip ? styles.flip : ''}`}>
+      {/* 원본리스트 */}
       <ul className={`${listClasses} ${styles.original}`}>
         {airplaneList.map((airplane, index) => {
-          return <Airplane index={index} airplane={airplane} />;
+          const [hover, setHover] = useState(false);
+
+          return (
+            <li
+              key={`original : ${index}`}
+              className={styles.airplane}
+              onMouseEnter={() => {
+                onStop();
+                setHover(true);
+              }}
+              onMouseLeave={() => {
+                onRun();
+                setHover(false);
+              }}
+            >
+              <Image
+                className={styles.airplaneImage}
+                src="/image/paper_airplane_back.png"
+                fill={true}
+                style={{ objectFit: 'contain' }}
+                sizes="100%"
+                alt={`${airplane.title} 뒷 이미지`}
+              />
+              <div className={`${hover && styles.polaroidUp}`}>
+                <Image
+                  className={styles.airplaneImage}
+                  src="/image/paper_airplane_polaroid.png"
+                  fill={true}
+                  style={{ objectFit: 'contain' }}
+                  sizes="100%"
+                  alt={`${airplane.title} 폴라로이드`}
+                />
+                <div className={styles.thumbnail}>
+                  <Image
+                    className={`${isFlip ? styles.flip : ''}`}
+                    src={`${airplane.thumbnail}`}
+                    fill={true}
+                    style={{ objectFit: 'cover' }}
+                    sizes="100%"
+                    alt={`${airplane.title}의 소개 사진`}
+                  />
+                </div>
+              </div>
+              <Image
+                className={styles.airplaneImage}
+                src="/image/paper_airplane_front.png"
+                fill={true}
+                style={{ objectFit: 'contain' }}
+                sizes="100%"
+                alt={`${airplane.title} 앞 이미지`}
+              />
+              <div
+                className={`${styles.bubble} ${isFlip ? styles.flip : ''} ${
+                  hover ? styles.able : styles.unable
+                }`}
+              >
+                <Image
+                  src="/image/paper_airplane_bubble.png"
+                  fill={true}
+                  style={{ objectFit: 'contain' }}
+                  sizes="100%"
+                  alt={`${airplane.title} 타이틀 풍선`}
+                />
+                <p>{airplane.title}</p>
+              </div>
+            </li>
+          );
         })}
       </ul>
+
+      {/* 복제리스트 */}
       <ul className={`${listClasses} ${styles.clone}`}>
         {airplaneList.map((airplane, index) => {
-          return <Airplane index={index} airplane={airplane} />;
+          const [hover, setHover] = useState(false);
+
+          return (
+            <li
+              key={`clone : ${index}`}
+              className={styles.airplane}
+              onMouseEnter={() => {
+                onStop();
+                setHover(true);
+              }}
+              onMouseLeave={() => {
+                onRun();
+                setHover(false);
+              }}
+            >
+              <Image
+                className={styles.airplaneImage}
+                src="/image/paper_airplane_back.png"
+                fill={true}
+                style={{ objectFit: 'contain' }}
+                sizes="100%"
+                alt={`${airplane.title} 뒷 이미지`}
+              />
+              <div className={`${hover && styles.polaroidUp}`}>
+                <Image
+                  className={styles.airplaneImage}
+                  src="/image/paper_airplane_polaroid.png"
+                  fill={true}
+                  style={{ objectFit: 'contain' }}
+                  sizes="100%"
+                  alt={`${airplane.title} 폴라로이드`}
+                />
+                <div className={styles.thumbnail}>
+                  <Image
+                    className={`${isFlip ? styles.flip : ''}`}
+                    src={`${airplane.thumbnail}`}
+                    fill={true}
+                    style={{ objectFit: 'cover' }}
+                    sizes="100%"
+                    alt={`${airplane.title}의 소개 사진`}
+                  />
+                </div>
+              </div>
+              <Image
+                className={styles.airplaneImage}
+                src="/image/paper_airplane_front.png"
+                fill={true}
+                style={{ objectFit: 'contain' }}
+                sizes="100%"
+                alt={`${airplane.title} 앞 이미지`}
+              />
+              <div
+                className={`${styles.bubble} ${isFlip ? styles.flip : ''} ${
+                  hover ? styles.able : styles.unable
+                }`}
+              >
+                <Image
+                  src="/image/paper_airplane_bubble.png"
+                  fill={true}
+                  style={{ objectFit: 'contain' }}
+                  sizes="100%"
+                  alt={`${airplane.title} 타이틀 풍선`}
+                />
+                <p>{airplane.title}</p>
+              </div>
+            </li>
+          );
         })}
       </ul>
     </div>

@@ -77,10 +77,22 @@
     background: themes.$mainColor;
   }
   .bannerSection {
+    position: relative;
     justify-content: space-between;
 
     height: themes.$mainContainerHeight;
 
+    .bannerText {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      position: absolute;
+      top: 5.5%;
+
+      color: themes.$whiteColor;
+      font-size: themes.$subTitleFontSize;
+    }
     div {
       width: 100%;
       max-width: themes.$maxWidth;
