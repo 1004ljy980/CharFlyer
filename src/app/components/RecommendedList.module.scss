@@ -1,0 +1,70 @@
+@use '@/app/styles/themes.scss' as themes;
+
+.recommendedContainer {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+
+  div {
+    position: relative;
+    width: 20%;
+
+    transition: opacity 500ms, transform 500ms;
+
+    .recommendedAirplane {
+      cursor: pointer;
+      transition: transform 500ms;
+
+      &:hover {
+        transform: translateY(-20px);
+      }
+    }
+    .flyer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: themes.$whiteColor;
+
+      animation: flyerOpen 500ms;
+
+      .thumbnail {
+        position: relative;
+        width: 100%;
+        height: 60%;
+
+        .titleBox {
+          position: relative;
+          top: 87.5%;
+          left: 15%;
+          width: 70%;
+          height: 12.5%;
+
+          overflow: hidden;
+          background-color: themes.$whiteColor;
+
+          .title {
+            font-size: themes.$subTitleFontSize;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            text-align: center;
+
+            transform: translateY(50%);
+          }
+        }
+      }
+    }
+  }
+}
+
+// animation
+@keyframes flyerOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 100;
+    transform: translate(0);
+  }
+}

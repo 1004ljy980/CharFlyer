@@ -2,10 +2,12 @@
 
 import styles from './BannerList.module.scss';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
 
 import Image from 'next/image';
+
+const AIRPLANE_AMOUNT = 20;
 
 export default function BannerList({
   postList,
@@ -21,7 +23,7 @@ export default function BannerList({
 
   // 20개의 비행기로 리스트가 구성됩니다.
   const airplaneList: Array<TypeIntroductionPostList> = [];
-  for (let i = 0, j = 0; i < 20; i++) {
+  for (let i = 0, j = 0; i < AIRPLANE_AMOUNT; i++) {
     j == postList.length && (j = 0);
     airplaneList.push(postList[j++]);
   }
@@ -86,20 +88,20 @@ export default function BannerList({
                 sizes="100%"
                 alt={`${airplane.title} 앞 이미지`}
               />
-              <div
-                className={`${styles.bubble} ${isFlip ? styles.flip : ''} ${
-                  hover ? styles.able : styles.unable
-                }`}
-              >
-                <Image
-                  src="/image/paper_airplane_bubble.png"
-                  fill={true}
-                  style={{ objectFit: 'contain' }}
-                  sizes="100%"
-                  alt={`${airplane.title} 타이틀 풍선`}
-                />
-                <p>{airplane.title}</p>
-              </div>
+              {hover && (
+                <div
+                  className={`${styles.bubble} ${isFlip ? styles.flip : ''}`}
+                >
+                  <Image
+                    src="/image/paper_airplane_bubble.png"
+                    fill={true}
+                    style={{ objectFit: 'contain' }}
+                    sizes="100%"
+                    alt={`${airplane.title} 타이틀 풍선`}
+                  />
+                  <p>{airplane.title}</p>
+                </div>
+              )}
             </li>
           );
         })}
@@ -159,20 +161,20 @@ export default function BannerList({
                 sizes="100%"
                 alt={`${airplane.title} 앞 이미지`}
               />
-              <div
-                className={`${styles.bubble} ${isFlip ? styles.flip : ''} ${
-                  hover ? styles.able : styles.unable
-                }`}
-              >
-                <Image
-                  src="/image/paper_airplane_bubble.png"
-                  fill={true}
-                  style={{ objectFit: 'contain' }}
-                  sizes="100%"
-                  alt={`${airplane.title} 타이틀 풍선`}
-                />
-                <p>{airplane.title}</p>
-              </div>
+              {hover && (
+                <div
+                  className={`${styles.bubble} ${isFlip ? styles.flip : ''}`}
+                >
+                  <Image
+                    src="/image/paper_airplane_bubble.png"
+                    fill={true}
+                    style={{ objectFit: 'contain' }}
+                    sizes="100%"
+                    alt={`${airplane.title} 타이틀 풍선`}
+                  />
+                  <p>{airplane.title}</p>
+                </div>
+              )}
             </li>
           );
         })}

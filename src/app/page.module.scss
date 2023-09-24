@@ -45,22 +45,6 @@
   }
 }
 
-// RecommendedList Style
-.recommendedContainer {
-  display: flex;
-  justify-content: space-evenly;
-  height: 100%;
-
-  div {
-    position: relative;
-    width: 20%;
-
-    .recommendedAirplane {
-      cursor: pointer;
-    }
-  }
-}
-
 // Home Style
 .main {
   display: flex;
@@ -145,7 +129,7 @@
   }
   .recommendedSection {
     height: themes.$mainContainerHeight;
-    p {
+    .recommendedSectionTitle {
       margin-bottom: themes.$mediumSpacing;
 
       color: themes.$whiteColor;
