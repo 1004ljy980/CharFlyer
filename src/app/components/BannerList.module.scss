@@ -61,17 +61,21 @@ $airplaneRatioInWrap: 4;
         left: 10%;
         top: -100%;
         p {
-          display: flex;
-          justify-content: center;
-          align-items: center;
           position: absolute;
           left: 15%;
-          top: 68%;
+          top: 67.5%;
+
+          box-sizing: border-box;
           width: 70%;
-          height: themes.$titleFontSize;
+          height: 50px;
+          padding: calc((50px - themes.$subTitleFontSize) / 2);
+          overflow: hidden;
 
           font-size: themes.$subTitleFontSize;
+          text-align: center;
           text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: break-all;
         }
       }
     }

@@ -50,8 +50,30 @@ export default function RecommendedList({
                     sizes="100%"
                     alt={`추천 종이비행기 ${index}번째 섬네일`}
                   />
-                  <div className={styles.titleBox}>
-                    <p className={styles.title}>{airplane.title}</p>
+                  <p className={styles.title}>{airplane.title}</p>
+                </div>
+                <div className={styles.descriptionContainer}>
+                  <div className={styles.summaryBox}>
+                    <p className={styles.summary}>{airplane.summary}</p>
+                    {/* tags에 word-break break-word로 설정 */}
+                    <p className={styles.tags}>
+                      {airplane.tags.map((tag) => `#${tag}`).join(' ')}
+                    </p>
+                  </div>
+                  <div className={styles.author}>
+                    <div className={styles.authorProfile}>
+                      <Image
+                        src={`${airplane.authorImage}`}
+                        fill={true}
+                        style={{ objectFit: 'cover' }}
+                        sizes="100%"
+                        alt={`${airplane.authorName}의 프로필 이미지`}
+                      />
+                    </div>
+                    <span className={styles.by}>by</span>
+                    <span className={styles.authorName}>
+                      {airplane.authorName}
+                    </span>
                   </div>
                 </div>
               </div>
