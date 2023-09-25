@@ -1,8 +1,7 @@
-import { ObjectId } from 'mongoose';
-
 interface IntroductionPost {
+  id: String;
   introductionPostId: String;
-  authorId: ObjectId;
+  authorId: String;
   authorName: String;
   authorImage: String;
   title: String;
@@ -10,13 +9,14 @@ interface IntroductionPost {
   content: String;
   summary: String;
   category: String;
-  tags: Array<String>;
+  tags: String[];
   views: Number;
   timestamps: String;
 }
 
 export type TypeIntroductionPostList = Pick<
   IntroductionPost,
+  | 'id'
   | 'introductionPostId'
   | 'authorId'
   | 'authorName'
@@ -30,8 +30,9 @@ export type TypeIntroductionPostList = Pick<
   | 'timestamps'
 >;
 
-export type TypeIntroductionPost = Pick<
+export type TypeIntroductionPostDetail = Pick<
   IntroductionPost,
+  | 'id'
   | 'introductionPostId'
   | 'authorId'
   | 'authorName'

@@ -1,6 +1,6 @@
 import { TypeUser } from '@/types/interfaces/User.interface';
 import dbConnect from '@/utils/db/dbConnection';
-import User from '@/utils/schemas/users.model';
+import User from '@/schemas/users.model';
 import { Model } from 'mongoose';
 import { NextResponse } from 'next/server';
 

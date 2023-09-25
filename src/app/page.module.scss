@@ -45,22 +45,6 @@
   }
 }
 
-// RecommendedList Style
-.recommendedContainer {
-  display: flex;
-  justify-content: space-evenly;
-  height: 100%;
-
-  div {
-    position: relative;
-    width: 20%;
-
-    .recommendedAirplane {
-      cursor: pointer;
-    }
-  }
-}
-
 // Home Style
 .main {
   display: flex;
@@ -77,13 +61,26 @@
     background: themes.$mainColor;
   }
   .bannerSection {
+    position: relative;
     justify-content: space-between;
 
     height: themes.$mainContainerHeight;
 
+    .bannerText {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      position: absolute;
+      top: 5.5%;
+
+      color: themes.$whiteColor;
+      font-size: themes.$subTitleFontSize;
+    }
     div {
       width: 100%;
-      height: 350px;
+      max-width: themes.$maxWidth;
+      height: 300px;
     }
   }
   .searchingSection {
@@ -132,7 +129,7 @@
   }
   .recommendedSection {
     height: themes.$mainContainerHeight;
-    p {
+    .recommendedSectionTitle {
       margin-bottom: themes.$mediumSpacing;
 
       color: themes.$whiteColor;
@@ -141,6 +138,7 @@
     .recommendedBox {
       flex-grow: 1;
       width: 100%;
+      max-width: themes.$maxWidth;
     }
   }
   .randomSearchingSection {
