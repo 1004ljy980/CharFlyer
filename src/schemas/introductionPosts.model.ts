@@ -35,7 +35,7 @@ const IntroductionPostsSchema = new Schema(
       required: true,
     },
     tags: {
-      type: Array<String>,
+      type: Array<string>,
     },
     views: {
       type: Number,
@@ -48,21 +48,21 @@ const IntroductionPostsSchema = new Schema(
 );
 
 export type TypeIntroductionPost = {
-  _id: String;
-  introductionPostId: String;
+  _id: string;
+  introductionPostId: string;
   author: {
-    _id: String;
-    name: String;
-    profileImage: String;
+    _id: string;
+    name: string;
+    profileImage: string;
   };
-  title: String;
-  thumbnail: String;
-  content: String;
-  summary: String;
-  category: String;
-  tags: String[];
-  views: Number;
-  createdAt: String;
+  title: string;
+  thumbnail: string;
+  content: string;
+  summary: string;
+  category: string;
+  tags: string[];
+  views: number;
+  createdAt: string;
 };
 
 // models에서 IntroductionPost가 이미 있는지 확인합니다.

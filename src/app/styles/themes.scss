@@ -13,6 +13,7 @@ $shadowColor: rgb(150, 150, 150, 0.2);
 // typography
 $fontFamily: 'Pretendard Variable';
 $titleFontSize: 3rem;
+$titleFontSize2: 2rem;
 $subTitleFontSize: 1.5rem;
 $contentFontSize: 1.15rem;
 $linkFontSize: 1.1rem;
@@ -26,12 +27,14 @@ $largeTextSpacing: 3rem;
 $microSpacing: 8px;
 $tinySpacing: 16px;
 $smallSpacing: 24px;
+$midsizeSpacing: 32px;
 $mediumSpacing: 52px;
 $largeSpacing: 96px;
 
 // containerSize
 $maxWidth: 1920px;
 $contentMaxWidth: 1200px;
+$smallContentMaxWidth: 600px;
 $headerHeight: 3.5rem;
 $footerHeight: 17rem;
 $mainContainerHeight: 850px;

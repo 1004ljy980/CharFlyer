@@ -1,0 +1,55 @@
+@use '@/app/styles/themes.scss' as themes;
+
+.registerForm {
+  .registerStep {
+    width: 80%;
+    margin: 0 auto;
+
+    margin-bottom: themes.$midsizeSpacing;
+    .stepBar {
+      height: 8px;
+      margin-bottom: themes.$tinySpacing;
+
+      border-radius: 8px;
+      background-color: themes.$borderColor;
+
+      .stepPointer {
+        width: 33%;
+        height: 100%;
+
+        border-radius: inherit;
+        background-color: themes.$grayColor;
+      }
+      .firstStep {
+      }
+      .secondStep {
+      }
+      .finishStep {
+      }
+    }
+    .stepBox {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+  .checkContainer {
+    .checkList {
+      color: themes.$fontColor;
+
+      .allCheck {
+        padding-bottom: themes.$smallSpacing;
+
+        border-bottom: 1px solid themes.$borderColor;
+
+        font-weight: 500;
+      }
+      input {
+        margin-right: themes.$smallSpacing;
+      }
+      li {
+        padding: 0 themes.$smallSpacing;
+        margin-bottom: themes.$smallSpacing;
+      }
+    }
+  }
+}

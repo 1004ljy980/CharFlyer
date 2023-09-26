@@ -5,6 +5,7 @@ import Image from 'next/image';
 import BannerList from './components/BannerList';
 import { getIntroductionPostsList } from '@/utils/api/Fetcher';
 import RecommendedList from './components/RecommendedList';
+import './globals.css';
 
 // 데이터는 해당 page에서 받아들이고, 나머지 컴포넌트는 client component로 옮겨야 함.(이벤트 필요)
 // 단, 서버 컴포넌트와 클라이언트 컴포넌트는 네트워크 경계를 나누고 있으므로 직렬화가 필요함.
