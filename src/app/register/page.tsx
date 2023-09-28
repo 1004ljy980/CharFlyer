@@ -5,7 +5,6 @@ import { getManagement } from '@/utils/api/Fetcher';
 
 export default async function Register() {
   const managementContent = await getManagement();
-  console.log(managementContent);
 
   return (
     <div className={styles.container}>

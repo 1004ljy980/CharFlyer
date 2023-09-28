@@ -3,12 +3,12 @@ $mainColor: #f5cd6d;
 $subColor: #f7e590;
 // 요소 색상
 $blackColor: #000000;
-$grayColor: #777777;
+$grayColor: #8a8a8a;
 $fontColor: #444444;
 $whiteColor: #ffffff;
-$borderColor: #dddddd;
-$placeholderColor: #cccccc;
-$shadowColor: rgb(150, 150, 150, 0.2);
+$borderColor: #e1e1e1;
+$placeholderColor: #c5c5c5;
+$shadowColor: rgb(155, 155, 155, 0.2);
 
 // typography
 $fontFamily: 'Pretendard Variable';
@@ -17,6 +17,7 @@ $titleFontSize2: 2rem;
 $subTitleFontSize: 1.5rem;
 $contentFontSize: 1.15rem;
 $linkFontSize: 1.1rem;
+$fontSize: 1rem;
 
 // spacing
 $microTextSpacing: 0.25rem;
@@ -38,3 +39,19 @@ $smallContentMaxWidth: 600px;
 $headerHeight: 3.5rem;
 $footerHeight: 17rem;
 $mainContainerHeight: 850px;
+
+//button
+@mixin buttonStyle {
+  border-radius: 10px;
+  border: 0;
+  background-color: $mainColor;
+
+  color: $whiteColor;
+
+  cursor: pointer;
+  transition: background-color 250ms;
+
+  &:hover {
+    background-color: $subColor;
+  }
+}
