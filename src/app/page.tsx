@@ -32,7 +32,6 @@ export default async function Home() {
   const bannerData = await getIntroductionPostsList();
 
   return (
-    <>
       <main className={styles.main}>
         <section className={styles.bannerSection}>
           <p className={styles.bannerText}>캐릭터들이 찾아오고 있어요.</p>
@@ -99,6 +98,5 @@ export default async function Home() {
           </div>
         </section>
       </main>
-    </>
   );
 }

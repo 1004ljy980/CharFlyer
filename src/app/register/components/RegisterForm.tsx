@@ -11,7 +11,6 @@ import { TypeManagementContent } from '@/types/interfaces/management.interface';
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
 const FINISH_STEP = 3;
-const NEXT_STEP = 1;
 
 export default function RegisterForm({
   managementContent,
@@ -21,6 +20,12 @@ export default function RegisterForm({
   // 회원가입 진행도를 표시하기 위한 상태
   const [start, setStart] = useState(false);
   const [step, setStep] = useState<number | null>(null);
+
+  // 가입 시작
+  const startRegister = () => {
+    setStart(true);
+    setStep(FIRST_STEP);
+  };
 
   // 약관동의 펼치기
   // termsOfService
@@ -34,13 +39,16 @@ export default function RegisterForm({
     checkbox2: false,
     checkbox3: false,
   });
+  const isAllcheck = () => {
+    return isChecked.checkbox1 &&
+    isChecked.checkbox2 &&
+    isChecked.checkbox3
+  }
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.id) {
       case 'checkboxAll':
         setIsChecked(() => {
-          return isChecked.checkbox1 &&
-            isChecked.checkbox2 &&
-            isChecked.checkbox3
+          return isAllcheck()
             ? {
                 checkbox1: false,
                 checkbox2: false,
@@ -83,11 +91,11 @@ export default function RegisterForm({
     }
   };
 
-  // 가입 시작
-  const startRegister = () => {
-    setStart(true);
-    setStep(FIRST_STEP);
-  };
+  // 정보입력으로 이동
+  const goEnterInformationStep = () => {
+    setStep(SECOND_STEP);
+  }
+
   // 폼 제출 함수
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,9 +161,7 @@ export default function RegisterForm({
                 id="checkboxAll"
                 type="checkbox"
                 checked={
-                  isChecked.checkbox1 &&
-                  isChecked.checkbox2 &&
-                  isChecked.checkbox3
+                  isAllcheck()
                 }
                 onChange={handleCheckBoxChange}
               />
@@ -222,17 +228,25 @@ export default function RegisterForm({
               {PIAOpen && (
                 <textarea>
                   {managementContent?.personalInformationAgreement}
-                </textarea>
+                </textarea> 
               )}
             </li>
           </ul>
-          <button className={styles.agreeButton}>동의합니다.</button>
+          <button className={styles.agreeButton} disabled={!isAllcheck()} onClick={goEnterInformationStep}>동의합니다.</button>
         </div>
       )}
 
       {/* 정보입력 폼 */}
       {step == SECOND_STEP && (
-        <form onSubmit={handleFormSubmit}>
+        <form className={styles.informationForm} onSubmit={handleFormSubmit}>
+          <p className={styles.titleLine}><span>필수사항 *</span></p>
+          <p>이메일</p>
+          <p>비밀번호</p>
+          <p>닉네임</p>
+          <p className={styles.titleLine}><span>선택사항</span></p>
+          <p>프로필이미지</p>
+          <p>소개글 (100자 이내)</p>
+          <p>선호 태그 (5개 이내)</p>
           <button type="submit"></button>
         </form>
       )}

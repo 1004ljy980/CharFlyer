@@ -46,10 +46,7 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       margin: 0 auto;
       padding: themes.$tinySpacing;
 
-      color: themes.$whiteColor;
       font-size: themes.$contentFontSize;
-
-      cursor: pointer;
     }
   }
 
@@ -67,17 +64,22 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       background-color: themes.$borderColor;
 
       .stepPointer {
-        width: 33%;
+        width: 33.33%;
         height: 100%;
 
         border-radius: inherit;
         background-color: themes.$grayColor;
+
+        transition: transform 500ms;
       }
       .firstStep {
+        transform :translateX(0%);
       }
       .secondStep {
+        transform : translateX(100%);
       }
       .finishStep {
+        transform: translateX(200%);
       }
     }
     .stepBox {
@@ -126,6 +128,9 @@ $textAreaHieght: calc(themes.$fontSize * 10);
             themes.$tinySpacing/2
         );
         padding: 0 themes.$smallSpacing;
+        border : 1px solid themes.$grayColor;
+
+        color : themes.$fontColor;
 
         animation: openTextArea 500ms;
       }
@@ -143,10 +148,33 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       margin: 0 auto;
       padding: themes.$tinySpacing;
 
-      color: themes.$whiteColor;
       font-size: themes.$contentFontSize;
+    }
+  }
 
-      cursor: pointer;
+  // 정보입력
+  .informationForm {
+    color : themes.$grayColor;
+
+    p:nth-last-child(n+2) {
+      margin-bottom: themes.$smallSpacing;
+    }
+    .titleLine {
+      display : flex;
+      
+      span {
+        padding-right: themes.$smallTextSpacing; /* 오른쪽에 border를 위한 여백 */
+      }
+      
+      &::after {
+        flex : 1;
+        position: relative;
+        top : 0.5rem;
+        height: 1px; /* 가로 줄의 두께 */
+        background-color: themes.$borderColor; /* 가로 줄의 색상 */
+      
+        content: "";
+      }
     }
   }
 }

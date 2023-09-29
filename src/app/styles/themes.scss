@@ -54,4 +54,9 @@ $mainContainerHeight: 850px;
   &:hover {
     background-color: $subColor;
   }
+  &:disabled {
+    background-color: $grayColor;
+
+    cursor : default;
+  }
 }
