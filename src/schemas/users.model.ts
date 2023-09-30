@@ -14,7 +14,7 @@ const UsersSchema = new Schema(
     name: {
       type: String,
       required: true,
-      maxlength: 12,
+      maxlength: 16,
     },
     profileImage: {
       type: String,

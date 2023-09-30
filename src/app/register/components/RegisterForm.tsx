@@ -5,7 +5,7 @@ import { GrFormNext } from 'react-icons/gr';
 import { GrFormDown } from 'react-icons/gr';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 
 const FIRST_STEP = 1;
@@ -95,6 +95,11 @@ export default function RegisterForm({
   const goEnterInformationStep = () => {
     setStep(SECOND_STEP);
   }
+
+  // 정보입력
+  const [email, setEmail] = useState('');
+
+  const profileInputRef = useRef<HTMLInputElement | null>(null);
 
   // 폼 제출 함수
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -241,13 +246,33 @@ export default function RegisterForm({
         <form className={styles.informationForm} onSubmit={handleFormSubmit}>
           <p className={styles.titleLine}><span>필수사항 *</span></p>
           <p>이메일</p>
+          <div className={styles.inputBox}><input className={styles.input} placeholder='@를 포함한 이메일 주소를 입력해주세요.' value={email} onChange={()=>{}}/></div>
           <p>비밀번호</p>
+          <div className={styles.inputBox}><input className={styles.input} placeholder='비밀번호를 입력해주세요. (영문+숫자+특수문자 8자 이상)' value={email} onChange={()=>{}}/></div>
+          <div className={styles.inputBox}><input className={styles.input} placeholder='비밀번호를 다시 입력해주세요.' value={email} onChange={()=>{}}/></div>
           <p>닉네임</p>
+          <div className={styles.inputBox}><input className={styles.input} placeholder='닉네임을 정해주세요. (한글 8자, 영문 16자 이내)' value={email} onChange={()=>{}}/></div>
           <p className={styles.titleLine}><span>선택사항</span></p>
           <p>프로필이미지</p>
+          <div className={styles.profileBox}>
+          <div className={styles.profileImageBox}>
+          </div>
+          <button className={styles.profileUploadButton} onClick={()=>{profileInputRef.current?.click()}}>
+            프로필 업로드
+          <input type="file" accept=".jpg,.jpeg,.png" ref={profileInputRef} style={{display : 'none'}} />
+          </button>
+          </div>
           <p>소개글 (100자 이내)</p>
+          <div className={styles.inputBox}><input className={styles.input} placeholder='여러분을 소개해주세요. (100글자 이내)' value={email} onChange={()=>{}}/></div>
           <p>선호 태그 (5개 이내)</p>
-          <button type="submit"></button>
+          <div className={styles.tagsBox}>
+            <div className={styles.inputBox}><input className={styles.input} placeholder='태그' value={email} onChange={()=>{}}/></div>
+            <div className={styles.inputBox}><input className={styles.input} placeholder='태그' value={email} onChange={()=>{}}/></div>
+            <div className={styles.inputBox}><input className={styles.input} placeholder='태그' value={email} onChange={()=>{}}/></div>
+            <div className={styles.inputBox}><input className={styles.input} placeholder='태그' value={email} onChange={()=>{}}/></div>
+            <div className={styles.inputBox}><input className={styles.input} placeholder='태그' value={email} onChange={()=>{}}/></div>
+          </div>
+          <button className={styles.registerButton} type="submit">가입할래요.</button>
         </form>
       )}
 

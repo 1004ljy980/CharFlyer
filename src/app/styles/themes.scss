@@ -60,3 +60,33 @@ $mainContainerHeight: 850px;
     cursor : default;
   }
 }
+
+//input
+// padding, width, height 등은 직접 커스텀 필요
+@mixin inputStyle {
+  .inputBox {
+    display : block;
+
+    padding : $microSpacing;
+    border-radius: 10px;
+    border : 1px solid $borderColor;
+    overflow: hidden;
+
+    .input {
+      width : 100%;
+      height : $titleFontSize2;
+
+      border : 0;
+
+      color : $fontColor;
+      font-size: $contentFontSize;
+
+      &::placeholder {
+        color : $placeholderColor;
+      }
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}

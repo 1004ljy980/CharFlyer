@@ -154,11 +154,39 @@ $textAreaHieght: calc(themes.$fontSize * 10);
 
   // 정보입력
   .informationForm {
+    display: flex;
+    flex-direction: column;
+
     color : themes.$grayColor;
 
-    p:nth-last-child(n+2) {
-      margin-bottom: themes.$smallSpacing;
+    p {
+      margin-bottom: themes.$tinySpacing;
     }
+    .inputBox {
+      margin-bottom: themes.$tinySpacing;
+    }
+    .profileBox {
+      display : flex;
+      align-items: flex-end;
+      
+      margin-bottom: themes.$tinySpacing;
+    .profileImageBox {
+      position : relative;
+
+      width : 150px;
+      height : 150px;
+      margin-right : themes.$tinySpacing;
+
+      background-color: themes.$subColor;
+    }
+    .profileUploadButton {
+      @include themes.buttonStyle;
+
+      padding : themes.$microSpacing themes.$tinySpacing;
+      font-size : themes.$linkFontSize;
+    }
+  }
+    @include themes.inputStyle;
     .titleLine {
       display : flex;
       
@@ -175,6 +203,24 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       
         content: "";
       }
+    }
+    .tagsBox {
+      display : flex;
+
+      margin-bottom: themes.$mediumSpacing;
+      gap : themes.$tinySpacing;
+      .inputBox {
+        margin-bottom: 0;
+      }
+    }
+    .registerButton {
+      @include themes.buttonStyle;
+      width: 50%;
+
+      margin: 0 auto;
+      padding: themes.$tinySpacing;
+
+      font-size: themes.$contentFontSize;
     }
   }
 }
