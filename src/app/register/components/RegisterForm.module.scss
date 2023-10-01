@@ -162,6 +162,12 @@ $textAreaHieght: calc(themes.$fontSize * 10);
     p {
       margin-bottom: themes.$tinySpacing;
     }
+    .redOutline {
+      outline: themes.$redColor solid 1px;
+    }
+    .greenOutline {
+      outline: themes.$greenColor solid 1px;
+    }
     .inputBox {
       margin-bottom: themes.$tinySpacing;
     }
@@ -176,6 +182,8 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       width : 150px;
       height : 150px;
       margin-right : themes.$tinySpacing;
+      border-radius: 100%;
+      overflow: hidden;
 
       background-color: themes.$subColor;
     }
