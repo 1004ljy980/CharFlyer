@@ -1,8 +1,8 @@
 // color
 $mainColor: #f5cd6d;
 $subColor: #f7e590;
-$redColor : #fa4625;
-$greenColor : #18e96b;
+$redColor: #fa4625;
+$greenColor: #18e96b;
 
 // 요소 색상
 $blackColor: #000000;
@@ -21,6 +21,7 @@ $subTitleFontSize: 1.5rem;
 $contentFontSize: 1.15rem;
 $linkFontSize: 1.1rem;
 $fontSize: 1rem;
+$smallFontSize: 0.8rem;
 
 // spacing
 $microTextSpacing: 0.25rem;
@@ -60,7 +61,7 @@ $mainContainerHeight: 850px;
   &:disabled {
     background-color: $grayColor;
 
-    cursor : default;
+    cursor: default;
   }
 }
 
@@ -68,24 +69,24 @@ $mainContainerHeight: 850px;
 // padding, width, height 등은 직접 커스텀 필요
 @mixin inputStyle {
   .inputBox {
-    display : block;
+    display: block;
 
-    padding : $microSpacing;
+    padding: $microSpacing;
     border-radius: 10px;
-    border : 1px solid $borderColor;
+    border: 1px solid $borderColor;
     overflow: hidden;
 
     .input {
-      width : 100%;
-      height : $titleFontSize2;
+      width: 100%;
+      height: $titleFontSize2;
 
-      border : 0;
+      border: 0;
 
-      color : $fontColor;
+      color: $fontColor;
       font-size: $contentFontSize;
 
       &::placeholder {
-        color : $placeholderColor;
+        color: $placeholderColor;
       }
       &:focus {
         outline: 0;

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 
 function useDebounce<T>(callback: (value: T) => void, delay: number) {
-  const [debouncedValue, setDebouncedValue] = useState<T | undefined>(undefined);
+  const [debouncedValue, setDebouncedValue] = useState<T | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if(debouncedValue !== undefined)
-        callback(debouncedValue);
+      if (debouncedValue !== undefined) callback(debouncedValue);
     }, delay);
 
     return () => {

@@ -7,7 +7,7 @@ import { GrFormDown } from 'react-icons/gr';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
-import useDebounce from '@/hooks/useDebounce';
+import useDebounce from '@/utils/hooks/useDebounce';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -41,10 +41,8 @@ export default function RegisterForm({
     checkbox3: false,
   });
   const isAllcheck = () => {
-    return isChecked.checkbox1 &&
-    isChecked.checkbox2 &&
-    isChecked.checkbox3
-  }
+    return isChecked.checkbox1 && isChecked.checkbox2 && isChecked.checkbox3;
+  };
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.id) {
       case 'checkboxAll':
@@ -95,7 +93,7 @@ export default function RegisterForm({
   // 정보입력으로 이동
   const goEnterInformationStep = () => {
     setStep(SECOND_STEP);
-  }
+  };
 
   // 정보입력
   // check 상태들은 유효성을 검사하는 상태이며, false : 통과 X, true : 통과 O 의 의미를 가진다.
@@ -104,25 +102,68 @@ export default function RegisterForm({
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassowrd] = useState<boolean | null>(null);
   const [confirmedPassword, setConfirmedPassword] = useState('');
-  const [checkConfirmPassword, setCheckConfirmPassword] = useState<boolean | null>(null);
+  const [checkConfirmedPassword, setCheckConfirmedPassword] = useState<
+    boolean | null
+  >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
   const [profileImage, setProfileImage] = useState(null);
-  const [checkProfileImage, setCheckProfileImage] = useState<boolean | null>(null);
+  const [checkProfileImage, setCheckProfileImage] = useState<boolean | null>(
+    null
+  );
   const [introduction, setInstroduction] = useState('');
-  const [tags, setTags] = useState<string[]>(new Array(5)); 
+  const [tags, setTags] = useState<string[]>(new Array(5));
 
-  const debounceEmailCheck = useDebounce((email : string)=> {
-    setCheckEmail(()=>{
-    const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    return regex.test(email);
-    })
-  }, 500)
-  const handleChangeEmail = (event : React.ChangeEvent<HTMLInputElement>) => {
+  // 유효성 검사
+  // 커스텀 훅으로 리팩토링 필요할 듯 함 (추상화)
+  const debounceEmailCheck = useDebounce((email: string) => {
+    setCheckEmail(() => {
+      const regex =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      return regex.test(email);
+    });
+  }, 500);
+  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     debounceEmailCheck(event.target.value);
-    console.log(checkEmail);
-  }
+  };
+  const debouncePasswordCheck = useDebounce((password: string) => {
+    setCheckPassowrd(() => {
+      const regex =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
+      return regex.test(password);
+    });
+  }, 500);
+  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+    debouncePasswordCheck(event.target.value);
+  };
+  const debounceConfirmedPasswordCheck = useDebounce(
+    (confirmedPassword: string) => {
+      setCheckConfirmedPassword(() => {
+        return confirmedPassword === password;
+      });
+    },
+    500
+  );
+  const handleChangeConfirmedPassword = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmedPassword(event.target.value);
+    debounceConfirmedPasswordCheck(event.target.value);
+  };
+  const debounceNameCheck = useDebounce((name: string) => {
+    setCheckName(() => {
+      const regex = /^[가-힣a-zA-Z0-9]{2,8}$/;
+      return regex.test(name);
+    });
+  }, 500);
+  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+    debounceNameCheck(event.target.value);
+  };
+
+  // 프로필 업로드
   const profileInputRef = useRef<HTMLInputElement | null>(null);
 
   // 폼 제출 함수
@@ -189,9 +230,7 @@ export default function RegisterForm({
               <input
                 id="checkboxAll"
                 type="checkbox"
-                checked={
-                  isAllcheck()
-                }
+                checked={isAllcheck()}
                 onChange={handleCheckBoxChange}
               />
               <span className={styles.question}>전체 동의합니다.</span>
@@ -257,46 +296,206 @@ export default function RegisterForm({
               {PIAOpen && (
                 <textarea>
                   {managementContent?.personalInformationAgreement}
-                </textarea> 
+                </textarea>
               )}
             </li>
           </ul>
-          <button className={styles.agreeButton} disabled={!isAllcheck()} onClick={goEnterInformationStep}>동의합니다.</button>
+          <button
+            className={styles.agreeButton}
+            disabled={!isAllcheck()}
+            onClick={goEnterInformationStep}
+          >
+            동의합니다.
+          </button>
         </div>
       )}
 
       {/* 정보입력 폼 */}
       {step == SECOND_STEP && (
-        <form className={styles.informationForm} onSubmit={handleFormSubmit}>
-          <p className={styles.titleLine}><span>필수사항 *</span></p>
+        <form
+          className={styles.informationForm}
+          onSubmit={handleFormSubmit}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault(); // 엔터 키에 대한 기본 동작을 막음
+            }
+          }}
+        >
+          <p className={styles.titleLine}>
+            <span>필수사항 *</span>
+          </p>
           <p>이메일</p>
-          <div className={`${styles.inputBox} ${(checkEmail !== null) ? checkEmail ? styles.greenOutline : styles.redOutline : ''}`}><input className={styles.input} placeholder='@를 포함한 이메일 주소를 입력해주세요.' value={email} onChange={handleChangeEmail}/></div>
+          <div
+            className={`${styles.inputBox} ${
+              checkEmail !== null
+                ? checkEmail
+                  ? styles.greenOutline
+                  : styles.redOutline
+                : ''
+            }`}
+          >
+            <input
+              className={styles.input}
+              placeholder="@를 포함한 이메일 주소를 입력해주세요."
+              value={email}
+              onChange={handleChangeEmail}
+            />
+          </div>
+          {checkEmail !== null && !checkEmail && (
+            <p className={styles.notification}>
+              올바른 이메일 주소 형태가 아니에요.
+            </p>
+          )}
           <p>비밀번호</p>
-          <div className={styles.inputBox}><input className={styles.input} placeholder='비밀번호를 입력해주세요. (영문+숫자+특수문자 8자 이상)' value={email} onChange={()=>{}}/></div>
-          <div className={styles.inputBox}><input className={styles.input} placeholder='비밀번호를 다시 입력해주세요.' value={email} onChange={()=>{}}/></div>
+          <div
+            className={`${styles.inputBox} ${
+              checkPassword !== null
+                ? checkPassword
+                  ? styles.greenOutline
+                  : styles.redOutline
+                : ''
+            }`}
+          >
+            <input
+              type="password"
+              className={styles.input}
+              placeholder="비밀번호를 입력해주세요. (영문+숫자+특수문자 8자 이상)"
+              value={password}
+              onChange={handleChangePassword}
+            />
+          </div>
+          {checkPassword !== null && !checkPassword && (
+            <p className={styles.notification}>
+              비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.
+            </p>
+          )}
+          <div
+            className={`${styles.inputBox} ${
+              checkConfirmedPassword !== null
+                ? checkConfirmedPassword
+                  ? styles.greenOutline
+                  : styles.redOutline
+                : ''
+            }`}
+          >
+            <input
+              type="password"
+              className={styles.input}
+              placeholder="비밀번호를 다시 입력해주세요."
+              value={confirmedPassword}
+              onChange={handleChangeConfirmedPassword}
+            />
+          </div>
+          {checkConfirmedPassword !== null && !checkConfirmedPassword && (
+            <p className={styles.notification}>
+              위에서 입력한 비밀번호와 같도록 입력해주세요.
+            </p>
+          )}
           <p>닉네임</p>
-          <div className={styles.inputBox}><input className={styles.input} placeholder='닉네임을 정해주세요. (한글 8자, 영문 16자 이내)' value={email} onChange={()=>{}}/></div>
-          <p className={styles.titleLine}><span>선택사항</span></p>
+          <div
+            className={`${styles.inputBox} ${
+              checkName !== null
+                ? checkName
+                  ? styles.greenOutline
+                  : styles.redOutline
+                : ''
+            }`}
+          >
+            <input
+              className={styles.input}
+              placeholder="닉네임을 정해주세요. (8자 이내)"
+              value={name}
+              onChange={handleChangeName}
+            />
+          </div>
+          {checkName !== null && !checkName && (
+            <p className={styles.notification}>
+              닉네임은 두 글자 이상, 한글, 숫자, 영어를 포함한 조합 8자 이내만
+              가능합니다.
+            </p>
+          )}
+          <p className={styles.titleLine}>
+            <span>선택사항</span>
+          </p>
           <p>프로필이미지</p>
           <div className={styles.profileBox}>
-          <div className={styles.profileImageBox}>
-          </div>
-          <button className={styles.profileUploadButton} onClick={()=>{profileInputRef.current?.click()}}>
-            프로필 업로드
-          <input type="file" accept=".jpg,.jpeg,.png" ref={profileInputRef} style={{display : 'none'}} />
-          </button>
+            <div className={styles.profileImageBox}></div>
+            <button
+              className={styles.profileUploadButton}
+              onClick={() => {
+                profileInputRef.current?.click();
+              }}
+            >
+              프로필 업로드
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                ref={profileInputRef}
+                style={{ display: 'none' }}
+              />
+            </button>
           </div>
           <p>소개글 (100자 이내)</p>
-          <div className={styles.inputBox}><input className={styles.input} maxLength={100} placeholder='여러분을 소개해주세요. (100글자 이내)' value={email} onChange={()=>{}}/></div>
-          <p>선호 태그 (5개 이내)</p>
-          <div className={styles.tagsBox}>
-            <div className={styles.inputBox}><input className={styles.input} maxLength={10} placeholder='태그' value={email} onChange={()=>{}}/></div>
-            <div className={styles.inputBox}><input className={styles.input} maxLength={10} placeholder='태그' value={email} onChange={()=>{}}/></div>
-            <div className={styles.inputBox}><input className={styles.input} maxLength={10} placeholder='태그' value={email} onChange={()=>{}}/></div>
-            <div className={styles.inputBox}><input className={styles.input} maxLength={10} placeholder='태그' value={email} onChange={()=>{}}/></div>
-            <div className={styles.inputBox}><input className={styles.input} maxLength={10} placeholder='태그' value={email} onChange={()=>{}}/></div>
+          <div className={styles.inputBox}>
+            <input
+              className={styles.input}
+              maxLength={100}
+              placeholder="여러분을 소개해주세요. (100글자 이내)"
+              value={introduction}
+              onChange={() => {}}
+            />
           </div>
-          <button className={styles.registerButton} type="submit">가입할래요.</button>
+          <p>선호 태그 (5개 이내, 각 12자 이내)</p>
+          <div className={styles.tagsBox}>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                maxLength={10}
+                placeholder="태그"
+                value={tags[0]}
+                onChange={() => {}}
+              />
+            </div>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                maxLength={10}
+                placeholder="태그"
+                value={tags[1]}
+                onChange={() => {}}
+              />
+            </div>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                maxLength={10}
+                placeholder="태그"
+                value={tags[2]}
+                onChange={() => {}}
+              />
+            </div>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                maxLength={10}
+                placeholder="태그"
+                value={tags[3]}
+                onChange={() => {}}
+              />
+            </div>
+            <div className={styles.inputBox}>
+              <input
+                className={styles.input}
+                maxLength={10}
+                placeholder="태그"
+                value={tags[4]}
+                onChange={() => {}}
+              />
+            </div>
+          </div>
+          <button className={styles.registerButton} type="submit">
+            가입할래요.
+          </button>
         </form>
       )}
 
