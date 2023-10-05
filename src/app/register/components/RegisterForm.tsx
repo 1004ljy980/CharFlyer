@@ -12,6 +12,7 @@ import useDebounce from '@/utils/hooks/useDebounce';
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
 const FINISH_STEP = 3;
+const DEBOUNCE_DELAY = 500;
 
 export default function RegisterForm({
   managementContent,
@@ -112,39 +113,43 @@ export default function RegisterForm({
     null
   );
   const [introduction, setInstroduction] = useState('');
-  const [tags, setTags] = useState<string[]>(new Array(5));
+  const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
 
   // 유효성 검사
   // 커스텀 훅으로 리팩토링 필요할 듯 함 (추상화)
+
+  //--email
   const debounceEmailCheck = useDebounce((email: string) => {
     setCheckEmail(() => {
       const regex =
         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
       return regex.test(email);
     });
-  }, 500);
+  }, DEBOUNCE_DELAY);
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     debounceEmailCheck(event.target.value);
   };
+  //--password
   const debouncePasswordCheck = useDebounce((password: string) => {
     setCheckPassowrd(() => {
       const regex =
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
       return regex.test(password);
     });
-  }, 500);
+  }, DEBOUNCE_DELAY);
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
     debouncePasswordCheck(event.target.value);
   };
+  //--confirmPassword
   const debounceConfirmedPasswordCheck = useDebounce(
     (confirmedPassword: string) => {
       setCheckConfirmedPassword(() => {
         return confirmedPassword === password;
       });
     },
-    500
+    DEBOUNCE_DELAY
   );
   const handleChangeConfirmedPassword = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -152,15 +157,33 @@ export default function RegisterForm({
     setConfirmedPassword(event.target.value);
     debounceConfirmedPasswordCheck(event.target.value);
   };
+  //--name
   const debounceNameCheck = useDebounce((name: string) => {
     setCheckName(() => {
       const regex = /^[가-힣a-zA-Z0-9]{2,8}$/;
       return regex.test(name);
     });
-  }, 500);
+  }, DEBOUNCE_DELAY);
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
     debounceNameCheck(event.target.value);
+  };
+  //--introduction
+  const handleChangeIntroduction = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInstroduction(event.target.value);
+  };
+  //--tags
+  const handleChangeTags = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    setTags((prev) => {
+      const newTags = [...prev];
+      newTags[index] = event.target.value;
+      return newTags;
+    });
   };
 
   // 프로필 업로드
@@ -270,9 +293,9 @@ export default function RegisterForm({
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                >
-                  {managementContent?.termsOfService}
-                </textarea>
+                  value={managementContent?.termsOfService}
+                  readOnly={true}
+                />
               )}
             </li>
             <li
@@ -294,9 +317,13 @@ export default function RegisterForm({
               </span>
               <GrFormDown className={styles.downLogo} />
               {PIAOpen && (
-                <textarea>
-                  {managementContent?.personalInformationAgreement}
-                </textarea>
+                <textarea
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  value={managementContent?.personalInformationAgreement}
+                  readOnly={true}
+                />
               )}
             </li>
           </ul>
@@ -442,7 +469,7 @@ export default function RegisterForm({
               maxLength={100}
               placeholder="여러분을 소개해주세요. (100글자 이내)"
               value={introduction}
-              onChange={() => {}}
+              onChange={handleChangeIntroduction}
             />
           </div>
           <p>선호 태그 (5개 이내, 각 12자 이내)</p>
@@ -453,7 +480,9 @@ export default function RegisterForm({
                 maxLength={10}
                 placeholder="태그"
                 value={tags[0]}
-                onChange={() => {}}
+                onChange={(event) => {
+                  handleChangeTags(event, 0);
+                }}
               />
             </div>
             <div className={styles.inputBox}>
@@ -462,7 +491,9 @@ export default function RegisterForm({
                 maxLength={10}
                 placeholder="태그"
                 value={tags[1]}
-                onChange={() => {}}
+                onChange={(event) => {
+                  handleChangeTags(event, 1);
+                }}
               />
             </div>
             <div className={styles.inputBox}>
@@ -471,7 +502,9 @@ export default function RegisterForm({
                 maxLength={10}
                 placeholder="태그"
                 value={tags[2]}
-                onChange={() => {}}
+                onChange={(event) => {
+                  handleChangeTags(event, 2);
+                }}
               />
             </div>
             <div className={styles.inputBox}>
@@ -480,7 +513,9 @@ export default function RegisterForm({
                 maxLength={10}
                 placeholder="태그"
                 value={tags[3]}
-                onChange={() => {}}
+                onChange={(event) => {
+                  handleChangeTags(event, 3);
+                }}
               />
             </div>
             <div className={styles.inputBox}>
@@ -489,7 +524,9 @@ export default function RegisterForm({
                 maxLength={10}
                 placeholder="태그"
                 value={tags[4]}
-                onChange={() => {}}
+                onChange={(event) => {
+                  handleChangeTags(event, 4);
+                }}
               />
             </div>
           </div>
