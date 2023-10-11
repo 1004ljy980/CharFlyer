@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import useDebounce from '@/utils/hooks/useDebounce';
+import { useRouter } from 'next/navigation';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -192,6 +193,18 @@ export default function RegisterForm({
   // 폼 제출 함수
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    checkEmail === true &&
+      checkPassword === true &&
+      checkConfirmedPassword === true &&
+      checkName === true &&
+      setStep(FINISH_STEP);
+  };
+
+  // 로그인 이동 버튼
+  const router = useRouter(); // 라우터
+  const goLoginPage = () => {
+    router.push('/login');
   };
 
   return (
@@ -537,7 +550,34 @@ export default function RegisterForm({
       )}
 
       {/* 가입완료 메시지 */}
-      {step == FINISH_STEP && <></>}
+      {step == FINISH_STEP && (
+        <div>
+          <div className={styles.finishContainer}>
+            <div className={styles.finishComment}>
+              <div className={styles.airplaneBox}>
+                <Image
+                  className={styles.congratsAirplane}
+                  src="/image/paper_airplane_congrats.png"
+                  fill={true}
+                  style={{ objectFit: 'contain' }}
+                  sizes="100%"
+                  alt="둥둥 떠다니는 비행기"
+                />
+              </div>
+              <div className={styles.commentBox}>
+                <p>환영합니다 !</p>
+                <p>
+                  <span>회원가입</span>이 완료되었습니다.
+                </p>
+                <p>이제 여러분의 캐릭터와 굿즈를 알릴 수 있어요 !</p>
+              </div>
+            </div>
+            <button className={styles.loginButton} onClick={goLoginPage}>
+              로그인하러 갈래요.
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

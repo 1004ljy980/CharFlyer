@@ -235,6 +235,58 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       font-size: themes.$contentFontSize;
     }
   }
+
+  // 가입완료
+  .finishContainer {
+    display: flex;
+    flex-direction: column;
+
+    .finishComment {
+      .airplaneBox {
+        position: relative;
+
+        width: 300px;
+        height: 180px;
+        margin: themes.$smallSpacing auto;
+
+        .congratsAirplane {
+          animation: congrats 800ms;
+          align-self: center;
+        }
+      }
+      .commentBox {
+        padding: themes.$midsizeSpacing;
+
+        p {
+          text-align: center;
+
+          span {
+            font-weight: 400;
+            color: themes.$mainColor;
+          }
+        }
+        p:nth-child(1) {
+          margin-bottom: themes.$midsizeSpacing;
+
+          font-size: themes.$titleFontSize2;
+          font-weight: 300;
+        }
+        p:nth-child(n + 2) {
+          font-size: themes.$subTitleFontSize;
+          font-weight: 200;
+        }
+      }
+    }
+    .loginButton {
+      @include themes.buttonStyle;
+      width: 50%;
+
+      margin: 0 auto;
+      padding: themes.$tinySpacing;
+
+      font-size: themes.$contentFontSize;
+    }
+  }
 }
 
 @keyframes floatingAirplane {
@@ -255,5 +307,26 @@ $textAreaHieght: calc(themes.$fontSize * 10);
   }
   to {
     height: $textAreaHieght;
+  }
+}
+
+@keyframes congrats {
+  from {
+    transform: scale(0.8);
+  }
+  20% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
   }
 }
