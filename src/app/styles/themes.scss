@@ -1,21 +1,27 @@
 // color
 $mainColor: #f5cd6d;
 $subColor: #f7e590;
+$redColor: #fa4625;
+$greenColor: #18e96b;
+
 // 요소 색상
 $blackColor: #000000;
-$grayColor: #777777;
+$grayColor: #8a8a8a;
 $fontColor: #444444;
 $whiteColor: #ffffff;
-$borderColor: #dddddd;
-$placeholderColor: #cccccc;
-$shadowColor: rgb(150, 150, 150, 0.2);
+$borderColor: #e1e1e1;
+$placeholderColor: #c5c5c5;
+$shadowColor: rgb(155, 155, 155, 0.2);
 
 // typography
 $fontFamily: 'Pretendard Variable';
 $titleFontSize: 3rem;
+$titleFontSize2: 2rem;
 $subTitleFontSize: 1.5rem;
 $contentFontSize: 1.15rem;
 $linkFontSize: 1.1rem;
+$fontSize: 1rem;
+$smallFontSize: 0.8rem;
 
 // spacing
 $microTextSpacing: 0.25rem;
@@ -26,12 +32,65 @@ $largeTextSpacing: 3rem;
 $microSpacing: 8px;
 $tinySpacing: 16px;
 $smallSpacing: 24px;
+$midsizeSpacing: 32px;
 $mediumSpacing: 52px;
 $largeSpacing: 96px;
 
 // containerSize
 $maxWidth: 1920px;
 $contentMaxWidth: 1200px;
+$smallContentMaxWidth: 600px;
 $headerHeight: 3.5rem;
 $footerHeight: 17rem;
 $mainContainerHeight: 850px;
+
+//button
+@mixin buttonStyle {
+  border-radius: 10px;
+  border: 0;
+  background-color: $mainColor;
+
+  color: $whiteColor;
+
+  cursor: pointer;
+  transition: background-color 250ms;
+
+  &:hover {
+    background-color: $subColor;
+  }
+  &:disabled {
+    background-color: $grayColor;
+
+    cursor: default;
+  }
+}
+
+//input
+// padding, width, height 등은 직접 커스텀 필요
+@mixin inputStyle {
+  .inputBox {
+    display: block;
+
+    padding: $microSpacing;
+    border-radius: 10px;
+    border: 1px solid $borderColor;
+    overflow: hidden;
+
+    .input {
+      width: 100%;
+      height: $titleFontSize2;
+
+      border: 0;
+
+      color: $fontColor;
+      font-size: $contentFontSize;
+
+      &::placeholder {
+        color: $placeholderColor;
+      }
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}

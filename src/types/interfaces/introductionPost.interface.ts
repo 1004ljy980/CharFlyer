@@ -1,17 +1,17 @@
 interface IntroductionPost {
-  id: String;
-  introductionPostId: String;
-  authorId: String;
-  authorName: String;
-  authorImage: String;
-  title: String;
-  thumbnail: String;
-  content: String;
-  summary: String;
-  category: String;
-  tags: String[];
+  id: string;
+  introductionPostId: string;
+  authorId: string;
+  authorName: string;
+  authorImage: string;
+  title: string;
+  thumbnail: string;
+  content: string;
+  summary: string;
+  category: string;
+  tags: string[];
   views: Number;
-  timestamps: String;
+  timestamps: string;
 }
 
 export type TypeIntroductionPostList = Pick<
