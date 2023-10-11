@@ -28,13 +28,15 @@ export default function RootLayout({
         <header className={styles.header}>
           <div className={styles.container}>
             <h1>캐플라이어</h1>
-            <Image
-              className={styles.logo}
-              src="/image/web_logo.png"
-              width={120}
-              height={48}
-              alt="캐플라이어 로고"
-            />
+            <Link className={styles.logoLink} href="/">
+              <Image
+                className={styles.logo}
+                src="/image/web_logo.png"
+                fill={true}
+                sizes="100%"
+                alt="캐플라이어 로고"
+              />
+            </Link>
 
             {/* 일반 메뉴 */}
             <nav className={styles.leftContainer}>
@@ -61,7 +63,7 @@ export default function RootLayout({
                   </Link>
                 </li>
                 <li>
-                  <Link className={styles.registerLink} href="">
+                  <Link className={styles.registerLink} href="/register">
                     회원가입
                   </Link>
                 </li>

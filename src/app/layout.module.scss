@@ -34,6 +34,11 @@
       overflow: hidden;
       clip-path: polygon(0 0, 0 0, 0 0);
     }
+    .logoLink {
+      position: relative;
+      width: 120px;
+      height: 50px;
+    }
     .leftContainer {
       margin-left: themes.$mediumTextSpacing;
       li {

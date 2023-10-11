@@ -1,4 +1,5 @@
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
+import { TypeManagementContent } from '@/types/interfaces/management.interface';
 
 // 환경변수
 const DOMAIN = process.env.DOMAIN;
@@ -21,6 +22,20 @@ export async function getIntroductionPostsList(
       cache: 'no-store',
     }
   );
+
+  return response.json();
+}
+
+/*
+managements
+*/
+
+/**
+ * 이용약관, 개인정보 수집 및 이용 동의 정보를 받아옵니다.
+ * @returns Promise<TypeintroductionPostList>
+ */
+export async function getManagement(): Promise<TypeManagementContent> {
+  const response = await fetch(`http://${DOMAIN}:${PORT}/api/managements`);
 
   return response.json();
 }
