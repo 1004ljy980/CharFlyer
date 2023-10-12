@@ -28,11 +28,13 @@ export async function POST(request: Request) {
   try {
     const Users = await connectToDatabase();
     const data = await request.json();
-    const created = await Users?.create({
-      ...data,
-    });
 
-    return NextResponse.json(created);
+    console.log(data);
+    // const created = await Users?.create({
+    //   ...data,
+    // });
+
+    // return NextResponse.json(created);
   } catch (error) {
     console.error(error);
   }

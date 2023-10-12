@@ -9,7 +9,8 @@ import { useEffect, useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import useDebounce from '@/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
-import useEncodeFileToBase64 from '@/utils/hooks/useEncodeFileToBase64';
+import encodeFileToBase64 from '@/utils/encodeFileToBase64';
+import { postUser } from '@/utils/api/Fetcher';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -111,7 +112,7 @@ export default function RegisterForm({
   >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [introduction, setInstroduction] = useState('');
   const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
 
@@ -189,7 +190,9 @@ export default function RegisterForm({
   // 프로필 업로드
   const profileInputRef = useRef<HTMLInputElement | null>(null);
   const profileImageRef = useRef<HTMLImageElement | null>(null);
-  const inputProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputProfileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+
     // 이미지 프리뷰
     if(!e.target.files) return;
     const file = e.target.files[0] || '';
@@ -199,23 +202,35 @@ export default function RegisterForm({
       alert(`이미지는 ${LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`);
       return;
     }
-    // File 객체를 base64로 인코딩해주는 훅 사용
-    useEncodeFileToBase64(file, setProfileImage);
-  }
-  useEffect(()=> {
+
+    // File 객체를 base64로 인코딩해주는 유틸 사용
     if(profileImageRef.current)
-      profileImageRef.current.src = profileImage || '';
-  }, [profileImage])
+      profileImageRef.current.src = await encodeFileToBase64(file) || '';
+
+  }
 
   // 폼 제출 함수
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    checkEmail === true &&
+    // 유효성 검사 체크
+    if(checkEmail === true &&
       checkPassword === true &&
       checkConfirmedPassword === true &&
-      checkName === true &&
+      checkName === true) {
+      // 폼 데이터 정의
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+
+      try {
+        // API 요청
+        await postUser(formData);
+      } catch(error) {
+        console.error(error);
+      }
+      
       setStep(FINISH_STEP);
+    }
   };
 
   // 로그인 이동 버튼
@@ -371,7 +386,7 @@ export default function RegisterForm({
       {step == SECOND_STEP && (
         <form
           className={styles.informationForm}
-          onSubmit={handleFormSubmit}
+          onSubmit={handleFormSubmit}                           
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault(); // 엔터 키에 대한 기본 동작을 막음
@@ -481,6 +496,7 @@ export default function RegisterForm({
             </div>
             <button
               className={styles.profileUploadButton}
+              type="button"
               onClick={() => {
                 profileInputRef.current?.click();
               }}

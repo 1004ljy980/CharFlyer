@@ -1,9 +1,26 @@
+import { TypeUser } from '@/types/interfaces/User.interface';
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 
-// 환경변수
+// 상수
+const protocol = 'http';
 const DOMAIN = process.env.DOMAIN;
 const PORT = process.env.PORT;
+
+// fetch 상수
+const URL = `${protocol}://${DOMAIN}:${PORT}/api`;
+const POST = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
+const POST_FORM = {
+  method: 'POST',
+  headers: {
+    'Content-Type' : 'multipart/form-data',
+  },
+}
 
 /*
 introductionPosts
@@ -17,7 +34,7 @@ export async function getIntroductionPostsList(
   page: number = 0
 ): Promise<TypeIntroductionPostList[]> {
   const response = await fetch(
-    `http://${DOMAIN}:${PORT}/api/introduction-posts`,
+    `${URL}/introduction-posts`,
     {
       cache: 'no-store',
     }
@@ -35,7 +52,18 @@ managements
  * @returns Promise<TypeintroductionPostList>
  */
 export async function getManagement(): Promise<TypeManagementContent> {
-  const response = await fetch(`http://${DOMAIN}:${PORT}/api/managements`);
+  const response = await fetch(`${URL}/managements`,);
+
+  return response.json();
+}
+
+/*
+users
+*/
+
+export async function postUser(formData : FormData): Promise<TypeUser> {
+  console.log(`${URL}/users`);
+  const response = await fetch(`${URL}/users`, {...POST_FORM, body: formData});
 
   return response.json();
 }
