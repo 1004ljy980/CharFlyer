@@ -16,7 +16,7 @@ aws.config.update({
 const s3 = new aws.S3() as any;
 
 /**
- * 이 함수의 single 메소드를 통해 파일을 S3에 업로드합니다.
+ * 이 함수의 single, array 메소드를 통해 파일을 S3에 업로드합니다.
  */
 export const upload = multer({
   // storage : 파일 저장 위치

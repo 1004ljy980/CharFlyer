@@ -5,15 +5,17 @@ import { GrFormNext } from 'react-icons/gr';
 import { GrFormDown } from 'react-icons/gr';
 
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import useDebounce from '@/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
+import useEncodeFileToBase64 from '@/utils/hooks/useEncodeFileToBase64';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
 const FINISH_STEP = 3;
 const DEBOUNCE_DELAY = 500;
+const LIMITS_FILE_SIZE = 5 * 1024 * 1024;
 
 export default function RegisterForm({
   managementContent,
@@ -109,10 +111,7 @@ export default function RegisterForm({
   >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
-  const [profileImage, setProfileImage] = useState(null);
-  const [checkProfileImage, setCheckProfileImage] = useState<boolean | null>(
-    null
-  );
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [introduction, setInstroduction] = useState('');
   const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
 
@@ -189,6 +188,24 @@ export default function RegisterForm({
 
   // 프로필 업로드
   const profileInputRef = useRef<HTMLInputElement | null>(null);
+  const profileImageRef = useRef<HTMLImageElement | null>(null);
+  const inputProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 이미지 프리뷰
+    if(!e.target.files) return;
+    const file = e.target.files[0] || '';
+
+    // 파일 용량 검사
+    if(file.size > LIMITS_FILE_SIZE) {
+      alert(`이미지는 ${LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`);
+      return;
+    }
+    // File 객체를 base64로 인코딩해주는 훅 사용
+    useEncodeFileToBase64(file, setProfileImage);
+  }
+  useEffect(()=> {
+    if(profileImageRef.current)
+      profileImageRef.current.src = profileImage || '';
+  }, [profileImage])
 
   // 폼 제출 함수
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -459,7 +476,9 @@ export default function RegisterForm({
           </p>
           <p>프로필이미지</p>
           <div className={styles.profileBox}>
-            <div className={styles.profileImageBox}></div>
+            <div className={styles.profileImageBox}>
+              <img className={styles.profileImage} ref={profileImageRef}/>
+            </div>
             <button
               className={styles.profileUploadButton}
               onClick={() => {
@@ -469,8 +488,9 @@ export default function RegisterForm({
               프로필 업로드
               <input
                 type="file"
-                accept=".jpg,.jpeg,.png"
+                accept="image/jpg,image/jpeg,image/png"
                 ref={profileInputRef}
+                onChange={inputProfileImage}
                 style={{ display: 'none' }}
               />
             </button>
