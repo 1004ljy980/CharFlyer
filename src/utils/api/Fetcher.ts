@@ -4,8 +4,8 @@ import { TypeManagementContent } from '@/types/interfaces/management.interface';
 
 // 상수
 const protocol = 'http';
-const DOMAIN = process.env.DOMAIN;
-const PORT = process.env.PORT;
+const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
+const PORT = process.env.NEXT_PUBLIC_PORT;
 
 // fetch 상수
 const URL = `${protocol}://${DOMAIN}:${PORT}/api`;
@@ -46,7 +46,7 @@ managements
 
 /**
  * 이용약관, 개인정보 수집 및 이용 동의 정보를 받아옵니다.
- * @returns Promise<TypeintroductionPostList>
+ * @returns Promise<TypeManagementContent>
  */
 export async function getManagement(): Promise<TypeManagementContent> {
   const response = await fetch(`${URL}/managements`);
@@ -59,7 +59,7 @@ users
 */
 
 export async function postUser(formData: FormData): Promise<TypeUser> {
-  console.log(`${URL}`);
+  console.log(formData);
   const response = await fetch(`${URL}/users`, {
     ...POST_FORM,
     body: formData,

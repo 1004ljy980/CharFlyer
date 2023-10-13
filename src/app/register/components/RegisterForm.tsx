@@ -221,6 +221,7 @@ export default function RegisterForm({
     ) {
       // 폼 데이터 정의
       const form = e.target as HTMLFormElement;
+      console.log(form);
       const formData = new FormData(form);
 
       try {
