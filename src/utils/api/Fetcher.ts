@@ -18,7 +18,8 @@ const POST = {
 const POST_FORM = {
   method: 'POST',
   headers: {
-    'Content-Type': 'multipart/form-data',
+    // 'Content-Type': 'multipart/form-data'
+    // 해당 값은 encType에 의해 자동으로 지정될 것임.
   },
 };
 

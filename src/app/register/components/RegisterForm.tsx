@@ -222,7 +222,7 @@ export default function RegisterForm({
       // 폼 데이터 정의
       const form = e.currentTarget;
       const formData = new FormData(form);
-
+      
       try {
         // API 요청
         await postUser(formData);
@@ -393,6 +393,7 @@ export default function RegisterForm({
               e.preventDefault(); // 엔터 키에 대한 기본 동작을 막음
             }
           }}
+          encType='multipart/form-data'
         >
           <p className={styles.titleLine}>
             <span>필수사항 *</span>
