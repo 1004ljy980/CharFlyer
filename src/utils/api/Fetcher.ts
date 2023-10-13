@@ -14,13 +14,13 @@ const POST = {
   headers: {
     'Content-Type': 'application/json',
   },
-}
+};
 const POST_FORM = {
   method: 'POST',
   headers: {
-    'Content-Type' : 'multipart/form-data',
+    'Content-Type': 'multipart/form-data',
   },
-}
+};
 
 /*
 introductionPosts
@@ -33,12 +33,9 @@ introductionPosts
 export async function getIntroductionPostsList(
   page: number = 0
 ): Promise<TypeIntroductionPostList[]> {
-  const response = await fetch(
-    `${URL}/introduction-posts`,
-    {
-      cache: 'no-store',
-    }
-  );
+  const response = await fetch(`${URL}/introduction-posts`, {
+    cache: 'no-store',
+  });
 
   return response.json();
 }
@@ -52,7 +49,7 @@ managements
  * @returns Promise<TypeintroductionPostList>
  */
 export async function getManagement(): Promise<TypeManagementContent> {
-  const response = await fetch(`${URL}/managements`,);
+  const response = await fetch(`${URL}/managements`);
 
   return response.json();
 }
@@ -61,9 +58,12 @@ export async function getManagement(): Promise<TypeManagementContent> {
 users
 */
 
-export async function postUser(formData : FormData): Promise<TypeUser> {
-  console.log(`${URL}/users`);
-  const response = await fetch(`${URL}/users`, {...POST_FORM, body: formData});
+export async function postUser(formData: FormData): Promise<TypeUser> {
+  console.log(`${URL}`);
+  const response = await fetch(`${URL}/users`, {
+    ...POST_FORM,
+    body: formData,
+  });
 
   return response.json();
 }

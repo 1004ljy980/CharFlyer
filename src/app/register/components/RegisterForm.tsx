@@ -112,7 +112,7 @@ export default function RegisterForm({
   >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  // const [profileImage, setProfileImage] = useState<File | null>(null);
   const [introduction, setInstroduction] = useState('');
   const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
 
@@ -194,30 +194,31 @@ export default function RegisterForm({
     e.stopPropagation();
 
     // 이미지 프리뷰
-    if(!e.target.files) return;
+    if (!e.target.files) return;
     const file = e.target.files[0] || '';
 
     // 파일 용량 검사
-    if(file.size > LIMITS_FILE_SIZE) {
+    if (file.size > LIMITS_FILE_SIZE) {
       alert(`이미지는 ${LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`);
       return;
     }
 
     // File 객체를 base64로 인코딩해주는 유틸 사용
-    if(profileImageRef.current)
-      profileImageRef.current.src = await encodeFileToBase64(file) || '';
-
-  }
+    if (profileImageRef.current)
+      profileImageRef.current.src = (await encodeFileToBase64(file)) || '';
+  };
 
   // 폼 제출 함수
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // 유효성 검사 체크
-    if(checkEmail === true &&
+    if (
+      checkEmail === true &&
       checkPassword === true &&
       checkConfirmedPassword === true &&
-      checkName === true) {
+      checkName === true
+    ) {
       // 폼 데이터 정의
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
@@ -225,10 +226,10 @@ export default function RegisterForm({
       try {
         // API 요청
         await postUser(formData);
-      } catch(error) {
+      } catch (error) {
         console.error(error);
       }
-      
+
       setStep(FINISH_STEP);
     }
   };
@@ -386,7 +387,7 @@ export default function RegisterForm({
       {step == SECOND_STEP && (
         <form
           className={styles.informationForm}
-          onSubmit={handleFormSubmit}                           
+          onSubmit={handleFormSubmit}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault(); // 엔터 키에 대한 기본 동작을 막음
@@ -492,7 +493,7 @@ export default function RegisterForm({
           <p>프로필이미지</p>
           <div className={styles.profileBox}>
             <div className={styles.profileImageBox}>
-              <img className={styles.profileImage} ref={profileImageRef}/>
+              <img className={styles.profileImage} ref={profileImageRef} />
             </div>
             <button
               className={styles.profileUploadButton}
