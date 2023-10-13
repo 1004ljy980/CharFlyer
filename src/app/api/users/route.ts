@@ -27,13 +27,20 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const Users = await connectToDatabase();
-    const data = await request.formData();
-    console.log(data.get('name'));
-    // const created = await Users?.create({
-    //   ...data,
-    // });
+    const formData = await request.formData();
+    const data = {
+      email : formData.get("email"),
+      password : formData.get("password"),
+      name : formData.get("name"),
+      profileImage : '',
+      introduction : formData.get("introduction"),
+      preferredTags : formData.getAll("prefferedTags"),
+    }
+    const created = await Users?.create({
+      ...data,
+    });
 
-    // return NextResponse.json(created);
+    return NextResponse.json(created);
   } catch (error) {
     console.error(error);
   }

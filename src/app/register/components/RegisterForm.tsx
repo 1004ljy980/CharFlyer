@@ -226,11 +226,12 @@ export default function RegisterForm({
       try {
         // API 요청
         await postUser(formData);
+        // 성공할 때 성공 화면을 띄움
+        setStep(FINISH_STEP);
       } catch (error) {
         console.error(error);
+        alert("회원가입에 실패했습니다.");
       }
-
-      setStep(FINISH_STEP);
     }
   };
 
@@ -532,7 +533,7 @@ export default function RegisterForm({
           <div className={styles.tagsBox}>
             <div className={styles.inputBox}>
               <input
-                name="tags"
+                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -544,6 +545,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
+              name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -555,6 +557,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
+              name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -566,6 +569,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
+              name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -577,6 +581,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
+              name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
