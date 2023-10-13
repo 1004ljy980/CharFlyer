@@ -220,8 +220,7 @@ export default function RegisterForm({
       checkName === true
     ) {
       // 폼 데이터 정의
-      const form = e.target as HTMLFormElement;
-      console.log(form);
+      const form = e.currentTarget;
       const formData = new FormData(form);
 
       try {
@@ -409,6 +408,7 @@ export default function RegisterForm({
             }`}
           >
             <input
+              name="email"
               className={styles.input}
               placeholder="@를 포함한 이메일 주소를 입력해주세요."
               value={email}
@@ -431,6 +431,7 @@ export default function RegisterForm({
             }`}
           >
             <input
+              name="password"
               type="password"
               className={styles.input}
               placeholder="비밀번호를 입력해주세요. (영문+숫자+특수문자 8자 이상)"
@@ -476,6 +477,7 @@ export default function RegisterForm({
             }`}
           >
             <input
+              name="name"
               className={styles.input}
               placeholder="닉네임을 정해주세요. (8자 이내)"
               value={name}
@@ -505,6 +507,7 @@ export default function RegisterForm({
             >
               프로필 업로드
               <input
+                name="profileImage"
                 type="file"
                 accept="image/jpg,image/jpeg,image/png"
                 ref={profileInputRef}
@@ -516,6 +519,7 @@ export default function RegisterForm({
           <p>소개글 (100자 이내)</p>
           <div className={styles.inputBox}>
             <input
+              name="introduction"
               className={styles.input}
               maxLength={100}
               placeholder="여러분을 소개해주세요. (100글자 이내)"
@@ -527,6 +531,7 @@ export default function RegisterForm({
           <div className={styles.tagsBox}>
             <div className={styles.inputBox}>
               <input
+                name="tags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"

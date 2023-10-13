@@ -27,7 +27,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const Users = await connectToDatabase();
-    const data = request.body;
+    const data = request.formData;
     console.log(data);
     // const created = await Users?.create({
     //   ...data,

@@ -59,7 +59,6 @@ users
 */
 
 export async function postUser(formData: FormData): Promise<TypeUser> {
-  console.log(formData);
   const response = await fetch(`${URL}/users`, {
     ...POST_FORM,
     body: formData,
