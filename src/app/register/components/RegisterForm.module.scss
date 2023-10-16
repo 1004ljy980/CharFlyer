@@ -190,6 +190,12 @@ $textAreaHieght: calc(themes.$fontSize * 10);
         overflow: hidden;
 
         background-color: themes.$subColor;
+
+        .profileImage {
+          width : 100%;
+          height : 100%;
+          object-fit: cover;
+        }
       }
       .profileUploadButton {
         @include themes.buttonStyle;
