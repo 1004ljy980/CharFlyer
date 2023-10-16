@@ -24,10 +24,12 @@ export async function GET() {
   }
 }
 
+// users의 POST 라우팅은 미들웨어를 통해 전달되므로 request에 파일 URL 경로가 포함될 수 있음.
 export async function POST(request: Request) {
   try {
     const Users = await connectToDatabase();
     const formData = await request.formData();
+    
     const data = {
       email : formData.get("email"),
       password : formData.get("password"),
