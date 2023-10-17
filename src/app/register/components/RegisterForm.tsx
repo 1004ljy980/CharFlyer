@@ -11,12 +11,12 @@ import useDebounce from '@/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
 import encodeFileToBase64 from '@/utils/encodeFileToBase64';
 import { postUser } from '@/utils/api/Fetcher';
+import MIDDLEWARE from '@/constants/Middleware.';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
 const FINISH_STEP = 3;
 const DEBOUNCE_DELAY = 500;
-const LIMITS_FILE_SIZE = 5 * 1024 * 1024;
 
 export default function RegisterForm({
   managementContent,
@@ -198,8 +198,8 @@ export default function RegisterForm({
     const file = e.target.files[0] || '';
 
     // 파일 용량 검사
-    if (file.size > LIMITS_FILE_SIZE) {
-      alert(`이미지는 ${LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`);
+    if (file.size > MIDDLEWARE.LIMITS_FILE_SIZE) {
+      alert(`이미지는 ${MIDDLEWARE.LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`);
       return;
     }
 
