@@ -222,7 +222,7 @@ export default function RegisterForm({
       // 폼 데이터 정의
       const form = e.currentTarget;
       const formData = new FormData(form);
-      
+
       try {
         // API 요청
         await postUser(formData);
@@ -230,7 +230,7 @@ export default function RegisterForm({
         setStep(FINISH_STEP);
       } catch (error) {
         console.error(error);
-        alert("회원가입에 실패했습니다.");
+        alert('회원가입에 실패했습니다.');
       }
     }
   };
@@ -394,7 +394,7 @@ export default function RegisterForm({
               e.preventDefault(); // 엔터 키에 대한 기본 동작을 막음
             }
           }}
-          encType='multipart/form-data'
+          encType="multipart/form-data"
         >
           <p className={styles.titleLine}>
             <span>필수사항 *</span>
@@ -545,7 +545,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-              name="preferredTags"
+                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -557,7 +557,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-              name="preferredTags"
+                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -569,7 +569,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-              name="preferredTags"
+                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -581,7 +581,7 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-              name="preferredTags"
+                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"

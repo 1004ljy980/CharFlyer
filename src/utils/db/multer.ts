@@ -26,9 +26,11 @@ const s3 = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: "charflyerbucket",
+    bucket: 'charflyerbucket',
     key: (req, file, callback) => {
       callback(null, `${file.originalname}-${Date.now().toString()}`);
     },
   }),
 });
+
+export default upload;
