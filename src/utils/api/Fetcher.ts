@@ -1,6 +1,7 @@
 import { TypeUser } from '@/types/interfaces/User.interface';
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
+import TypeResponse from '@/types/response';
 
 // 상수
 const protocol = 'http';
@@ -58,8 +59,11 @@ export async function getManagement(): Promise<TypeManagementContent> {
 /*
 users
 */
+export async function postUser(
+  formData: FormData
+): Promise<TypeUser & TypeResponse> {
+  // 미들웨어를 거치므로 response 열람 필요
 
-export async function postUser(formData: FormData): Promise<TypeUser> {
   const response = await fetch(`${URL}/users`, {
     ...POST_FORM,
     body: formData,

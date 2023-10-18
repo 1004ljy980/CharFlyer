@@ -199,7 +199,9 @@ export default function RegisterForm({
 
     // 파일 용량 검사
     if (file.size > MIDDLEWARE.LIMITS_FILE_SIZE) {
-      alert(`이미지는 ${MIDDLEWARE.LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`);
+      alert(
+        `이미지는 ${MIDDLEWARE.LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`
+      );
       return;
     }
 
@@ -222,12 +224,17 @@ export default function RegisterForm({
       // 폼 데이터 정의
       const form = e.currentTarget;
       const formData = new FormData(form);
+      // 배열 값은 같은 키를 이용하여 여러 값 삽입
+      tags.forEach((tag) => {
+        tag && formData.append('prefferedTags', tag);
+      });
 
       try {
         // API 요청
-        await postUser(formData);
+        const response = await postUser(formData);
         // 성공할 때 성공 화면을 띄움
-        setStep(FINISH_STEP);
+        if (response.status === 201) setStep(FINISH_STEP);
+        else throw new Error(response.message);
       } catch (error) {
         console.error(error);
         alert('회원가입에 실패했습니다.');
@@ -533,7 +540,6 @@ export default function RegisterForm({
           <div className={styles.tagsBox}>
             <div className={styles.inputBox}>
               <input
-                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -545,7 +551,6 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -557,7 +562,6 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -569,7 +573,6 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
@@ -581,7 +584,6 @@ export default function RegisterForm({
             </div>
             <div className={styles.inputBox}>
               <input
-                name="preferredTags"
                 className={styles.input}
                 maxLength={10}
                 placeholder="태그"
