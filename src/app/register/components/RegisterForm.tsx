@@ -5,10 +5,13 @@ import { GrFormNext } from 'react-icons/gr';
 import { GrFormDown } from 'react-icons/gr';
 
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import useDebounce from '@/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
+import encodeFileToBase64 from '@/utils/encodeFileToBase64';
+import { postUser } from '@/utils/api/Fetcher';
+import MIDDLEWARE from '@/constants/Middleware.';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -109,10 +112,7 @@ export default function RegisterForm({
   >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
-  const [profileImage, setProfileImage] = useState(null);
-  const [checkProfileImage, setCheckProfileImage] = useState<boolean | null>(
-    null
-  );
+  // const [profileImage, setProfileImage] = useState<File | null>(null);
   const [introduction, setInstroduction] = useState('');
   const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
 
@@ -189,16 +189,58 @@ export default function RegisterForm({
 
   // 프로필 업로드
   const profileInputRef = useRef<HTMLInputElement | null>(null);
+  const profileImageRef = useRef<HTMLImageElement | null>(null);
+  const inputProfileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+
+    // 이미지 프리뷰
+    if (!e.target.files) return;
+    const file = e.target.files[0] || '';
+
+    // 파일 용량 검사
+    if (file.size > MIDDLEWARE.LIMITS_FILE_SIZE) {
+      alert(
+        `이미지는 ${MIDDLEWARE.LIMITS_FILE_SIZE / 1024 ** 2}MB 이하여야 합니다.`
+      );
+      return;
+    }
+
+    // File 객체를 base64로 인코딩해주는 유틸 사용
+    if (profileImageRef.current)
+      profileImageRef.current.src = (await encodeFileToBase64(file)) || '';
+  };
 
   // 폼 제출 함수
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    checkEmail === true &&
+    // 유효성 검사 체크
+    if (
+      checkEmail === true &&
       checkPassword === true &&
       checkConfirmedPassword === true &&
-      checkName === true &&
-      setStep(FINISH_STEP);
+      checkName === true
+    ) {
+      // 폼 데이터 정의
+      const form = e.currentTarget;
+      const formData = new FormData(form);
+      // 배열 값은 같은 키를 이용하여 여러 값 삽입
+      tags.forEach((tag) => {
+        tag && formData.append('prefferedTags', tag);
+      });
+
+      try {
+        // API 요청
+        const response = await postUser(formData);
+
+        // 성공할 때 성공 화면을 띄움
+        if (response.status === 201) setStep(FINISH_STEP);
+        else throw new Error(response.message);
+      } catch (error) {
+        console.error(error);
+        alert('회원가입에 실패했습니다.');
+      }
+    }
   };
 
   // 로그인 이동 버튼
@@ -360,6 +402,7 @@ export default function RegisterForm({
               e.preventDefault(); // 엔터 키에 대한 기본 동작을 막음
             }
           }}
+          encType="multipart/form-data"
         >
           <p className={styles.titleLine}>
             <span>필수사항 *</span>
@@ -375,6 +418,7 @@ export default function RegisterForm({
             }`}
           >
             <input
+              name="email"
               className={styles.input}
               placeholder="@를 포함한 이메일 주소를 입력해주세요."
               value={email}
@@ -397,6 +441,7 @@ export default function RegisterForm({
             }`}
           >
             <input
+              name="password"
               type="password"
               className={styles.input}
               placeholder="비밀번호를 입력해주세요. (영문+숫자+특수문자 8자 이상)"
@@ -442,6 +487,7 @@ export default function RegisterForm({
             }`}
           >
             <input
+              name="name"
               className={styles.input}
               placeholder="닉네임을 정해주세요. (8자 이내)"
               value={name}
@@ -459,18 +505,23 @@ export default function RegisterForm({
           </p>
           <p>프로필이미지</p>
           <div className={styles.profileBox}>
-            <div className={styles.profileImageBox}></div>
+            <div className={styles.profileImageBox}>
+              <img className={styles.profileImage} ref={profileImageRef} />
+            </div>
             <button
               className={styles.profileUploadButton}
+              type="button"
               onClick={() => {
                 profileInputRef.current?.click();
               }}
             >
               프로필 업로드
               <input
+                name="profileImage"
                 type="file"
-                accept=".jpg,.jpeg,.png"
+                accept="image/jpg,image/jpeg,image/png"
                 ref={profileInputRef}
+                onChange={inputProfileImage}
                 style={{ display: 'none' }}
               />
             </button>
@@ -478,6 +529,7 @@ export default function RegisterForm({
           <p>소개글 (100자 이내)</p>
           <div className={styles.inputBox}>
             <input
+              name="introduction"
               className={styles.input}
               maxLength={100}
               placeholder="여러분을 소개해주세요. (100글자 이내)"

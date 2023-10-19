@@ -48,7 +48,7 @@ export async function GET() {
       timestamps: post.createdAt,
     }));
 
-    return NextResponse.json(modifiedData);
+    return NextResponse.json(modifiedData, { status : 200 });
   } catch (error) {
     console.error(error);
   }
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       ...data,
     });
 
-    return NextResponse.json(created);
+    return NextResponse.json(created, { status : 201 });
   } catch (error) {
     console.error(error);
     try {
