@@ -1,4 +1,5 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { v4 as uuidv4 } from 'uuid';
 
 // AWS IAM Setting
 const AWS_S3_ACCESS_ID = process.env.AWS_S3_ACCESS_ID || '';
@@ -20,20 +21,24 @@ const client = new S3Client({
  * @param file 파일
  * @returns
  */
-const uploadImageToS3 = async (file: Blob, folder: string) => {
+const uploadImageToS3 = async (file: Blob, folder: string): Promise<string> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
+    const key = `${folder}/${uuidv4()}_${file.name}`;
 
     const command = new PutObjectCommand({
       Bucket: AWS_S3_BUCKET,
-      Key: file.name, // uuid로 변환시켜줄 필요있음.
+      Key: key,
       Body: buffer,
+      ACL: 'public-read',
     });
 
     const response = await client.send(command);
-    console.log(response); // response 내용을 확인해서 URL을 얻을 수 있는 정보 있는지 확인 필요.
-    return response;
+
+    return response.$metadata.httpStatusCode === 200
+      ? `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/${key}`
+      : '';
   } catch (error) {
     return error;
   }

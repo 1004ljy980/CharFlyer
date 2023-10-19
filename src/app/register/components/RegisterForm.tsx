@@ -232,6 +232,7 @@ export default function RegisterForm({
       try {
         // API 요청
         const response = await postUser(formData);
+
         // 성공할 때 성공 화면을 띄움
         if (response.status === 201) setStep(FINISH_STEP);
         else throw new Error(response.message);

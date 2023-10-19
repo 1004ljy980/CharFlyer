@@ -30,20 +30,20 @@ export async function POST(request: NextRequest) {
     const Users = await connectToDatabase();
     const formData = await request.formData();
 
-    console.log('profileImage :', request.cookies.get('imageUrl'));
-
     const data = {
       email: formData.get('email'),
       password: formData.get('password'),
       name: formData.get('name'),
-      profileImage: request.cookies.get('imageUrl'),
+      profileImage: request.cookies.get('imageUrl')?.value,
       introduction: formData.get('introduction'),
       preferredTags: formData.getAll('prefferedTags'),
     };
+
     const created = await Users?.create({
       ...data,
     });
-    return NextResponse.json(created, { status: 201 });
+
+    return NextResponse.json({ status: 201 });
   } catch (error) {
     console.error(error);
   }

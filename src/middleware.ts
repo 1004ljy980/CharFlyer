@@ -14,18 +14,18 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 
     // 이미지 파일을 추출합니다.
     const formData = await request.formData();
-    const blob = formData.get('profileImage') as Blob;
+    const file = formData.get('profileImage') as Blob;
 
     // 파일이 존재하지 않으면 미들웨어 건너뜀
-    if (!blob) return response;
-    const file = new File([blob], blob.name, {
-      type: `image/${blob.name.split('.').pop()}`,
-    });
+    if (!file) return response;
 
     // 이미지 업로드가 성공하면 URL을 cookies의 imageUrl에 set 할 것
     try {
-      const imageUrl = (await uploadImageToS3(file, 'introduction')) as string;
-      response.cookies.set('imageUrl', imageUrl);
+      const imageUrl = await uploadImageToS3(file, 'introductionPost');
+
+      // unkown 형태의 Error 발생 가능
+      typeof imageUrl === 'string' &&
+        response.cookies.set('imageUrl', imageUrl);
 
       return response;
     } catch (error) {
