@@ -12,6 +12,9 @@ import Image from 'next/image';
 // 메타 데이터
 import type { Metadata } from 'next';
 
+// 상수
+import ROUTES from '@/constants/Routes';
+
 export const metadata: Metadata = {
   title: '캐플라이어',
   description: '캐릭터, 굿즈는 여기서 찾아보세요!',
@@ -28,7 +31,7 @@ export default function RootLayout({
         <header className={styles.header}>
           <div className={styles.container}>
             <h1>캐플라이어</h1>
-            <Link className={styles.logoLink} href="/">
+            <Link className={styles.logoLink} href={`${ROUTES.MAIN}`}>
               <Image
                 className={styles.logo}
                 src="/image/web_logo.png"
@@ -42,12 +45,12 @@ export default function RootLayout({
             <nav className={styles.leftContainer}>
               <ul>
                 <li>
-                  <Link className={styles.link} href="">
+                  <Link className={styles.link} href={`${ROUTES.MAIN}`}>
                     메인
                   </Link>
                 </li>
                 <li>
-                  <Link className={styles.link} href="">
+                  <Link className={styles.link} href={`${ROUTES.CATEGORY}`}>
                     카테고리
                   </Link>
                 </li>
@@ -58,12 +61,12 @@ export default function RootLayout({
             <nav className={styles.rightContainer}>
               <ul>
                 <li>
-                  <Link className={styles.loginLink} href="">
+                  <Link className={styles.loginLink} href={`${ROUTES.LOGIN}`}>
                     로그인
                   </Link>
                 </li>
                 <li>
-                  <Link className={styles.registerLink} href="/register">
+                  <Link className={styles.registerLink} href={`${ROUTES.REGISTER}`}>
                     회원가입
                   </Link>
                 </li>

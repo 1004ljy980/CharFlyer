@@ -2,8 +2,9 @@ import { TypeUser } from '@/types/interfaces/User.interface';
 import dbConnect from '@/utils/db/dbConnection';
 import User from '@/schemas/users.model';
 import { Model } from 'mongoose';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
+// 데이터베이스 연결
 async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {
   try {
     await dbConnect();
@@ -16,23 +17,33 @@ async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {
 export async function GET() {
   try {
     const Users = await connectToDatabase();
-    const data = await Users?.find({});
+    const data = await Users?.find({}).select('objectId');
 
-    return NextResponse.json({ data });
+    return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const Users = await connectToDatabase();
-    const data = await request.json();
+    const formData = await request.formData();
+
+    const data = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      name: formData.get('name'),
+      profileImage: request.cookies.get('imageUrl')?.value,
+      introduction: formData.get('introduction'),
+      preferredTags: formData.getAll('prefferedTags'),
+    };
+
     const created = await Users?.create({
       ...data,
     });
 
-    return NextResponse.json(created);
+    return NextResponse.json({ status: 201 });
   } catch (error) {
     console.error(error);
   }
