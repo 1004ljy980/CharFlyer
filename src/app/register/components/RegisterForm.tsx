@@ -112,9 +112,11 @@ export default function RegisterForm({
   >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
-  // const [profileImage, setProfileImage] = useState<File | null>(null);
   const [introduction, setInstroduction] = useState('');
   const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
+
+  // API 요청 중에는 이벤트를 비활성화 시킬 것임.
+  const isRequesting = useRef(false);
 
   // 유효성 검사
   // 커스텀 훅으로 리팩토링 필요할 듯 함 (추상화)
@@ -214,12 +216,13 @@ export default function RegisterForm({
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 유효성 검사 체크
+    // 유효성 검사, 요청 중 체크
     if (
       checkEmail === true &&
       checkPassword === true &&
       checkConfirmedPassword === true &&
-      checkName === true
+      checkName === true &&
+      isRequesting.current === false
     ) {
       // 폼 데이터 정의
       const form = e.currentTarget;
@@ -231,7 +234,9 @@ export default function RegisterForm({
 
       try {
         // API 요청
+        isRequesting.current = true;
         const response = await postUser(formData);
+        console.log('API 요청');
 
         // 성공할 때 성공 화면을 띄움
         if (response.status === 201) setStep(FINISH_STEP);
@@ -239,6 +244,8 @@ export default function RegisterForm({
       } catch (error) {
         console.error(error);
         alert('회원가입에 실패했습니다.');
+      } finally {
+        isRequesting.current = false;
       }
     }
   };
