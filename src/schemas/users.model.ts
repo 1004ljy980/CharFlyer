@@ -17,7 +17,7 @@ const UsersSchema = new Schema(
     name: {
       type: String,
       required: true,
-      maxlength: 16,
+      unique: true,
       match: /^[가-힣a-zA-Z0-9]{2,8}$/,
     },
     profileImage: {

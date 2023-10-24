@@ -1,7 +1,8 @@
-import { TypeUser } from '@/types/interfaces/User.interface';
+import { TypeCheckUser, TypeUser } from '@/types/interfaces/User.interface';
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import TypeResponse from '@/types/response';
+import API_ROUTES from './apiRoutes';
 
 // 상수
 const protocol = 'http';
@@ -10,6 +11,12 @@ const PORT = process.env.NEXT_PUBLIC_PORT;
 
 // fetch 상수
 const URL = `${protocol}://${DOMAIN}:${PORT}/api`;
+const GET = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 const POST = {
   method: 'POST',
   headers: {
@@ -35,7 +42,8 @@ introductionPosts
 export async function getIntroductionPostsList(
   page: number = 0
 ): Promise<TypeIntroductionPostList[]> {
-  const response = await fetch(`${URL}/introduction-posts`, {
+  const response = await fetch(`${URL}${API_ROUTES.INTRODUCNTION_POSTS}`, {
+    ...GET,
     cache: 'no-store',
   });
 
@@ -51,7 +59,7 @@ managements
  * @returns Promise<TypeManagementContent>
  */
 export async function getManagement(): Promise<TypeManagementContent> {
-  const response = await fetch(`${URL}/managements`);
+  const response = await fetch(`${URL}${API_ROUTES.MANAGEMENT}`, { ...GET });
 
   return response.json();
 }
@@ -59,6 +67,22 @@ export async function getManagement(): Promise<TypeManagementContent> {
 /*
 users
 */
+export enum CheckParma {
+  Email = 'email',
+  Name = 'name',
+}
+export async function checkUser(
+  checkParma: CheckParma,
+  param: string
+): Promise<TypeCheckUser & TypeResponse> {
+  const response = await fetch(
+    `${URL}${API_ROUTES.USERS}?${checkParma}=${param}`,
+    { ...GET }
+  );
+
+  return response.json();
+}
+
 export async function postUser(
   formData: FormData
 ): Promise<TypeUser & TypeResponse> {

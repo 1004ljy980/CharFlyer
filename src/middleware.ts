@@ -1,6 +1,6 @@
 import { NextFetchEvent, NextResponse, NextRequest } from 'next/server';
 import uploadImageToS3 from './utils/middleware/uploadImageToS3';
-import MIDDLEWARE from './constants/Middleware.';
+import MIDDLEWARE from './constants/Middleware';
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
   // 기본 response

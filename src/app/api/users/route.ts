@@ -4,6 +4,7 @@ import User from '@/schemas/users.model';
 import { Model } from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import { useSearchParams } from 'next/navigation';
 
 // 데이터베이스 연결
 async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {
@@ -15,14 +16,36 @@ async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const Users = await connectToDatabase();
-    const data = await Users?.find({}).select('objectId');
 
-    return NextResponse.json({ data }, { status: 200 });
+    // 쿼리를 읽어옵니다.
+    const { searchParams } = new URL(request.url);
+    const emailParam = searchParams.get('email');
+    const nameParam = searchParams.get('name');
+
+    // 제공해줄 응답 없음 204
+    if (!emailParam && !nameParam) return NextResponse.json({ status: 204 });
+
+    let response;
+    if (emailParam !== null) {
+      response = await User?.findOne({ email: emailParam });
+    } else if (nameParam !== null) {
+      response = await User?.findOne({ name: nameParam });
+    }
+
+    if (response) {
+      return NextResponse.json({ isDuplication: true }, { status: 200 });
+    } else {
+      return NextResponse.json({ isDuplication: false }, { status: 200 });
+    }
   } catch (error) {
     console.error(error);
+    return NextResponse.json(
+      { message: '유저 확인 라우터에서 오류가 발생하였습니다.' },
+      { status: 500 }
+    );
   }
 }
 

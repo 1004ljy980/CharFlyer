@@ -3,7 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 
 import Image from 'next/image';
 import BannerList from './components/BannerList';
-import { getIntroductionPostsList } from '@/utils/api/Fetcher';
+import * as Fetcher from '@/utils/api/Fetcher';
 import RecommendedList from './components/RecommendedList';
 import './globals.css';
 
@@ -29,74 +29,74 @@ const SearchBar = () => {
 
 export default async function Home() {
   // 추후에 4페이지(10개 * 4)를 받아들이고, 2페이지씩 위 아래 BannerSection에 각각 전달해야함.
-  const bannerData = await getIntroductionPostsList();
+  const bannerData = await Fetcher.getIntroductionPostsList();
 
   return (
-      <main className={styles.main}>
-        <section className={styles.bannerSection}>
-          <p className={styles.bannerText}>캐릭터들이 찾아오고 있어요.</p>
-          {bannerData ? (
-            <>
-              <div>
-                <BannerList postList={bannerData} isFlip={true} />
-              </div>
-              <div>
-                <BannerList postList={bannerData} />
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
-        </section>
-        <section className={styles.searchingSection}>
-          <p className={styles.searchTitle}>
-            어떤 <span>캐릭터</span>를 원하세요?
-          </p>
-          <p className={styles.searchSubTitle}>
-            물론, <span>굿즈</span>도요!
-          </p>
-          <div className={styles.searchBox}>
-            <SearchBar />
-          </div>
-          <div className={styles.boatBox}>
-            {/* 배경 이미지 */}
-            <Image
-              src="/image/paper_boat.png"
-              fill={true}
-              style={{ objectFit: 'contain' }}
-              sizes="100%"
-              alt="종이배"
-            />
-            <Image
-              src="/image/paper_boat_wave.png"
-              fill={true}
-              style={{ objectFit: 'contain' }}
-              sizes="100%"
-              alt="수면"
-            />
-            <div className={styles.surface}></div>
-          </div>
-        </section>
-        <section className={styles.recommendedSection}>
-          <p className={styles.recommendedSectionTitle}>비행기가 날아왔어요.</p>
-          <div className={styles.recommendedBox}>
-            <RecommendedList postList={bannerData} />
-          </div>
-        </section>
-        <section className={styles.randomSearchingSection}>
-          <p>그리고, 누군가의 이야기</p>
-          <div className={styles.backgroundLine}></div>
-          <div className={styles.randomAirplaneBox}>
-            <Image
-              className={styles.randomAirplane}
-              src="/image/paper_airplane_only.png"
-              fill={true}
-              style={{ objectFit: 'contain' }}
-              sizes="100%"
-              alt="종이비행기 랜덤 탐색"
-            />
-          </div>
-        </section>
-      </main>
+    <main className={styles.main}>
+      <section className={styles.bannerSection}>
+        <p className={styles.bannerText}>캐릭터들이 찾아오고 있어요.</p>
+        {bannerData ? (
+          <>
+            <div>
+              <BannerList postList={bannerData} isFlip={true} />
+            </div>
+            <div>
+              <BannerList postList={bannerData} />
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+      </section>
+      <section className={styles.searchingSection}>
+        <p className={styles.searchTitle}>
+          어떤 <span>캐릭터</span>를 원하세요?
+        </p>
+        <p className={styles.searchSubTitle}>
+          물론, <span>굿즈</span>도요!
+        </p>
+        <div className={styles.searchBox}>
+          <SearchBar />
+        </div>
+        <div className={styles.boatBox}>
+          {/* 배경 이미지 */}
+          <Image
+            src="/image/paper_boat.png"
+            fill={true}
+            style={{ objectFit: 'contain' }}
+            sizes="100%"
+            alt="종이배"
+          />
+          <Image
+            src="/image/paper_boat_wave.png"
+            fill={true}
+            style={{ objectFit: 'contain' }}
+            sizes="100%"
+            alt="수면"
+          />
+          <div className={styles.surface}></div>
+        </div>
+      </section>
+      <section className={styles.recommendedSection}>
+        <p className={styles.recommendedSectionTitle}>비행기가 날아왔어요.</p>
+        <div className={styles.recommendedBox}>
+          <RecommendedList postList={bannerData} />
+        </div>
+      </section>
+      <section className={styles.randomSearchingSection}>
+        <p>그리고, 누군가의 이야기</p>
+        <div className={styles.backgroundLine}></div>
+        <div className={styles.randomAirplaneBox}>
+          <Image
+            className={styles.randomAirplane}
+            src="/image/paper_airplane_only.png"
+            fill={true}
+            style={{ objectFit: 'contain' }}
+            sizes="100%"
+            alt="종이비행기 랜덤 탐색"
+          />
+        </div>
+      </section>
+    </main>
   );
 }
