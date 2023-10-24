@@ -137,7 +137,7 @@ export default function RegisterForm({
   const debouncePasswordCheck = useDebounce((password: string) => {
     setCheckPassowrd(() => {
       const regex =
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,64}$/;
       return regex.test(password);
     });
   }, DEBOUNCE_DELAY);
@@ -236,7 +236,6 @@ export default function RegisterForm({
         // API 요청
         isRequesting.current = true;
         const response = await postUser(formData);
-        console.log('API 요청');
 
         // 성공할 때 성공 화면을 띄움
         if (response.status === 201) setStep(FINISH_STEP);
@@ -458,7 +457,8 @@ export default function RegisterForm({
           </div>
           {checkPassword !== null && !checkPassword && (
             <p className={styles.notification}>
-              비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.
+              비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상 64자 이하여야
+              합니다.
             </p>
           )}
           <div

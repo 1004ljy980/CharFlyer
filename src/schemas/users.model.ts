@@ -1,12 +1,14 @@
 import { Schema, models, model } from 'mongoose';
 
-// email, password 64자는 프론트엔드에서 관리. (password는 해쉬값이 들어 갈 것)
+// password는 해쉬값이 들어감.
 const UsersSchema = new Schema(
   {
     email: {
       type: String,
       required: true,
-      unique : true,
+      unique: true,
+      match:
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
     },
     password: {
       type: String,
@@ -16,6 +18,7 @@ const UsersSchema = new Schema(
       type: String,
       required: true,
       maxlength: 16,
+      match: /^[가-힣a-zA-Z0-9]{2,8}$/,
     },
     profileImage: {
       type: String,
@@ -34,6 +37,23 @@ const UsersSchema = new Schema(
     },
     preferredTags: {
       type: Array<String>,
+      validate: [
+        (tags: Array<String>) => {
+          if (tags.length < 1) return true;
+
+          const maxLength = 10;
+          let isWrong = false;
+
+          tags.forEach((tag) => {
+            if (tag.length > maxLength) {
+              isWrong = true;
+              return;
+            }
+          });
+
+          return isWrong;
+        },
+      ],
     },
   },
   {
