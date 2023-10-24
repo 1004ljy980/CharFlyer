@@ -10,8 +10,8 @@ import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import useDebounce from '@/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
 import encodeFileToBase64 from '@/utils/encodeFileToBase64';
-import { postUser } from '@/utils/api/Fetcher';
-import MIDDLEWARE from '@/constants/Middleware.';
+import * as Fetcher from '@/utils/api/Fetcher';
+import MIDDLEWARE from '@/constants/Middleware';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -104,6 +104,9 @@ export default function RegisterForm({
   // check 상태들은 유효성을 검사하는 상태이며, false : 통과 X, true : 통과 O 의 의미를 가진다.
   const [email, setEmail] = useState('');
   const [checkEmail, setCheckEmail] = useState<boolean | null>(null);
+  const [checkDuplicationEmail, setCheckDuplicationEmail] = useState<
+    boolean | null
+  >(null);
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassowrd] = useState<boolean | null>(null);
   const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -112,20 +115,46 @@ export default function RegisterForm({
   >(null);
   const [name, setName] = useState('');
   const [checkName, setCheckName] = useState<boolean | null>(null);
-  // const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [checkDuplicationName, setCheckDuplicationName] = useState<
+    boolean | null
+  >(null);
   const [introduction, setInstroduction] = useState('');
   const [tags, setTags] = useState<string[]>(new Array(5).fill(''));
+
+  // API 요청 중에는 이벤트를 비활성화 시킬 것임.
+  const isRequesting = useRef(false);
 
   // 유효성 검사
   // 커스텀 훅으로 리팩토링 필요할 듯 함 (추상화)
 
   //--email
-  const debounceEmailCheck = useDebounce((email: string) => {
-    setCheckEmail(() => {
-      const regex =
-        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-      return regex.test(email);
-    });
+  // API를 통한 중복 체크 포함
+  const debounceEmailCheck = useDebounce(async (email: string) => {
+    // 정규식 체크
+    const regex =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const regexCheck = regex.test(email);
+
+    // 정규식 체크 True
+    if (regexCheck) {
+      setCheckEmail(true);
+      // 중복 체크
+      try {
+        const response = await Fetcher.checkUser(
+          Fetcher.CheckParma.Email,
+          email
+        );
+
+        response.isDuplication
+          ? setCheckDuplicationEmail(false)
+          : setCheckDuplicationEmail(true);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // 정규식 체크 False
+      setCheckEmail(false);
+    }
   }, DEBOUNCE_DELAY);
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -135,7 +164,7 @@ export default function RegisterForm({
   const debouncePasswordCheck = useDebounce((password: string) => {
     setCheckPassowrd(() => {
       const regex =
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,64}$/;
       return regex.test(password);
     });
   }, DEBOUNCE_DELAY);
@@ -159,11 +188,29 @@ export default function RegisterForm({
     debounceConfirmedPasswordCheck(event.target.value);
   };
   //--name
-  const debounceNameCheck = useDebounce((name: string) => {
-    setCheckName(() => {
-      const regex = /^[가-힣a-zA-Z0-9]{2,8}$/;
-      return regex.test(name);
-    });
+  // API를 통한 중복 체크 포함
+  const debounceNameCheck = useDebounce(async (name: string) => {
+    // 정규식 체크
+    const regex = /^[가-힣a-zA-Z0-9]{2,8}$/;
+    const regexCheck = regex.test(name);
+
+    // 정규식 체크 True
+    if (regexCheck) {
+      setCheckName(true);
+      // 중복 체크
+      try {
+        const response = await Fetcher.checkUser(Fetcher.CheckParma.Name, name);
+
+        response.isDuplication
+          ? setCheckDuplicationName(false)
+          : setCheckDuplicationName(true);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // 정규식 체크 False
+      setCheckName(false);
+    }
   }, DEBOUNCE_DELAY);
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -214,12 +261,13 @@ export default function RegisterForm({
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 유효성 검사 체크
+    // 유효성 검사, 요청 중 체크
     if (
       checkEmail === true &&
       checkPassword === true &&
       checkConfirmedPassword === true &&
-      checkName === true
+      checkName === true &&
+      isRequesting.current === false
     ) {
       // 폼 데이터 정의
       const form = e.currentTarget;
@@ -231,7 +279,8 @@ export default function RegisterForm({
 
       try {
         // API 요청
-        const response = await postUser(formData);
+        isRequesting.current = true;
+        const response = await Fetcher.postUser(formData);
 
         // 성공할 때 성공 화면을 띄움
         if (response.status === 201) setStep(FINISH_STEP);
@@ -239,6 +288,8 @@ export default function RegisterForm({
       } catch (error) {
         console.error(error);
         alert('회원가입에 실패했습니다.');
+      } finally {
+        isRequesting.current = false;
       }
     }
   };
@@ -411,7 +462,7 @@ export default function RegisterForm({
           <div
             className={`${styles.inputBox} ${
               checkEmail !== null
-                ? checkEmail
+                ? checkEmail && checkDuplicationEmail
                   ? styles.greenOutline
                   : styles.redOutline
                 : ''
@@ -425,10 +476,16 @@ export default function RegisterForm({
               onChange={handleChangeEmail}
             />
           </div>
-          {checkEmail !== null && !checkEmail && (
+          {checkEmail === false ? (
             <p className={styles.notification}>
               올바른 이메일 주소 형태가 아니에요.
             </p>
+          ) : checkEmail === true && checkDuplicationEmail === false ? (
+            <p className={styles.notification}>
+              이미 가입된 이메일 주소입니다.
+            </p>
+          ) : (
+            <></>
           )}
           <p>비밀번호</p>
           <div
@@ -451,7 +508,8 @@ export default function RegisterForm({
           </div>
           {checkPassword !== null && !checkPassword && (
             <p className={styles.notification}>
-              비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.
+              비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상 64자 이하여야
+              합니다.
             </p>
           )}
           <div
@@ -480,7 +538,7 @@ export default function RegisterForm({
           <div
             className={`${styles.inputBox} ${
               checkName !== null
-                ? checkName
+                ? checkName && checkDuplicationName
                   ? styles.greenOutline
                   : styles.redOutline
                 : ''
@@ -494,11 +552,15 @@ export default function RegisterForm({
               onChange={handleChangeName}
             />
           </div>
-          {checkName !== null && !checkName && (
+          {checkName === false ? (
             <p className={styles.notification}>
               닉네임은 두 글자 이상, 한글, 숫자, 영어를 포함한 조합 8자 이내만
-              가능합니다.
+              가능합니다
             </p>
+          ) : checkName === true && checkDuplicationName === false ? (
+            <p className={styles.notification}>중복된 닉네임입니다.</p>
+          ) : (
+            <></>
           )}
           <p className={styles.titleLine}>
             <span>선택사항</span>
