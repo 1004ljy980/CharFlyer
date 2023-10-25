@@ -2,9 +2,9 @@ import styles from './page.module.scss';
 import { BsSearch } from 'react-icons/bs';
 
 import Image from 'next/image';
-import BannerList from './components/BannerList';
+import BannerList from './_components/BannerList';
 import * as Fetcher from '@/utils/api/Fetcher';
-import RecommendedList from './components/RecommendedList';
+import RecommendedList from './_components/RecommendedList';
 import './globals.css';
 
 // 데이터는 해당 page에서 받아들이고, 나머지 컴포넌트는 client component로 옮겨야 함.(이벤트 필요)

@@ -1,6 +1,6 @@
 import styles from './page.module.scss';
 
-import RegisterForm from './components/RegisterForm';
+import RegisterForm from './_components/RegisterForm';
 import { getManagement } from '@/utils/api/Fetcher';
 
 export default async function Register() {
