@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       email: formData.get('email'),
       password: hashedPassword,
       name: formData.get('name'),
-      profileImage: request.cookies.get('imageUrl')?.value,
+      profileImage: request.headers.get('imageUrl') || '',
       introduction: formData.get('introduction'),
       preferredTags: formData.getAll('prefferedTags'),
     };
