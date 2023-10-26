@@ -62,11 +62,15 @@ export async function POST(request: NextRequest) {
       saltRounds
     );
 
+    // 프로필 이미지의 Url을 불러옵니다.
+    const imageUrl = request.headers.get('imageUrl');
+    const decodedUrl = imageUrl && decodeURIComponent(imageUrl);
+
     const data = {
       email: formData.get('email'),
       password: hashedPassword,
       name: formData.get('name'),
-      profileImage: request.headers.get('imageUrl') || '',
+      profileImage: decodedUrl || '',
       introduction: formData.get('introduction'),
       preferredTags: formData.getAll('prefferedTags'),
     };

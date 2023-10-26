@@ -24,8 +24,9 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 
       // 에러가 아닐 시 response의 headers에 imageUrl 저장
       if (typeof imageUrl === 'string') {
+        const encodedUrl = encodeURIComponent(imageUrl);
         const newUserHeaders = new Headers(request.headers);
-        newUserHeaders.set('imageUrl', imageUrl);
+        newUserHeaders.set('imageUrl', encodedUrl);
         return NextResponse.next({
           request: {
             headers: newUserHeaders,
@@ -33,6 +34,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
         });
       }
     } catch (error) {
+      console.log(error);
       return NextResponse.json(
         { message: '서버 이미지 업로드 실패 :', error },
         { status: 500 }
