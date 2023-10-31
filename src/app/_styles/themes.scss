@@ -67,9 +67,11 @@ $mainContainerHeight: 850px;
 
 //input
 // padding, width, height 등은 직접 커스텀 필요
+// className 맞춰줘야 함
 @mixin inputStyle {
   .inputBox {
     display: block;
+    box-sizing: border-box;
 
     padding: $microSpacing;
     border-radius: 10px;

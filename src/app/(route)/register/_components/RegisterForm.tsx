@@ -18,6 +18,7 @@ const SECOND_STEP = 2;
 const FINISH_STEP = 3;
 const DEBOUNCE_DELAY = 500;
 
+// 기능별 컴포넌트 분할 필요
 export default function RegisterForm({
   managementContent,
 }: {

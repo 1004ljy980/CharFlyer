@@ -215,7 +215,7 @@ $textAreaHieght: calc(themes.$fontSize * 10);
       &::after {
         flex: 1;
         position: relative;
-        top: 0.5rem;
+        top: calc(themes.$fontSize / 2);
         height: 1px; /* 가로 줄의 두께 */
         background-color: themes.$borderColor; /* 가로 줄의 색상 */
 
