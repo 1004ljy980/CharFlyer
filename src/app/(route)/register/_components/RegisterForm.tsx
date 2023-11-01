@@ -5,7 +5,7 @@ import { GrFormNext } from 'react-icons/gr';
 import { GrFormDown } from 'react-icons/gr';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
 import useDebounce from '@/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';

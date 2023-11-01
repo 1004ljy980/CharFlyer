@@ -86,12 +86,25 @@ export async function checkUser(
 export async function postUser(
   formData: FormData
 ): Promise<TypeUser & TypeResponse> {
-  // 미들웨어를 거치므로 response 열람 필요
-
-  const response = await fetch(`${URL}/users`, {
+  const response = await fetch(`${URL}${API_ROUTES.USERS}`, {
     ...POST_FORM,
     body: formData,
   });
+  const data = await response.json();
 
-  return response.json();
+  return { ...data, status: response.status };
+}
+
+/*
+session 로그인/로그아웃
+*/
+
+export async function postLogin(formData: FormData): Promise<TypeResponse> {
+  const response = await fetch(`${URL}${API_ROUTES.SESSION}`, {
+    ...POST_FORM,
+    body: formData,
+  });
+  const data = await response.json();
+
+  return { ...data, status: response.status };
 }

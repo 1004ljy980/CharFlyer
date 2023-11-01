@@ -1,6 +1,8 @@
 import styles from './page.module.scss';
 
 import LoginForm from './_components/LoginForm';
+import Link from 'next/link';
+import ROUTES from '@/constants/Routes';
 
 export default async function Login() {
   return (
@@ -12,7 +14,12 @@ export default async function Login() {
       <div className={styles.registerButtonContainer}>
         <span className={styles.registerTitle}>아직 회원이 아니신가요 ?</span>
         <div className={styles.registerButtonContainer}>
-          <div className={styles.emailRegisterButtonBox}>@</div>
+          <Link
+            className={styles.emailRegisterButtonBox}
+            href={ROUTES.REGISTER}
+          >
+            <span>@</span>
+          </Link>
         </div>
       </div>
     </div>

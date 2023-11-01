@@ -4,7 +4,6 @@ import User from '@/schemas/users.model';
 import { Model } from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { useSearchParams } from 'next/navigation';
 
 // 데이터베이스 연결
 async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {

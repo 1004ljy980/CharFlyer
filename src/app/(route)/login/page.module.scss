@@ -64,6 +64,14 @@
 
         font-size: themes.$subTitleFontSize;
         color: themes.$whiteColor;
+        text-decoration: 0;
+
+        span {
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
       }
     }
   }
