@@ -48,8 +48,12 @@ export async function GET() {
       timestamps: post.createdAt,
     }));
 
-    return NextResponse.json(modifiedData, { status : 200 });
+    return NextResponse.json(modifiedData, { status: 200 });
   } catch (error) {
+    return NextResponse.json(
+      { message: `게시글 받아오기에 실패하였습니다. ${error}` },
+      { status: 500 }
+    );
     console.error(error);
   }
 }
@@ -70,7 +74,7 @@ export async function POST(request: Request) {
       ...data,
     });
 
-    return NextResponse.json(created, { status : 201 });
+    return NextResponse.json(created, { status: 201 });
   } catch (error) {
     console.error(error);
     try {
@@ -78,6 +82,10 @@ export async function POST(request: Request) {
       await adjustSequenceValue('introductionPostId', AdjustTypes.Decrement);
     } catch (error) {
       console.log('counter 오류 : ' + error);
+      return NextResponse.json(
+        { message: `counter에서 오류 발생 ${error}` },
+        { status: 500 }
+      );
     }
   }
 }

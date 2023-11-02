@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import encodeFileToBase64 from '@/utils/encodeFileToBase64';
 import * as Fetcher from '@/utils/api/Fetcher';
 import MIDDLEWARE from '@/constants/Middleware';
+import ROUTES from '@/constants/Routes';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -298,7 +299,7 @@ export default function RegisterForm({
   // 로그인 이동 버튼
   const router = useRouter(); // 라우터
   const goLoginPage = () => {
-    router.push('/login');
+    router.push(ROUTES.LOGIN);
   };
 
   return (

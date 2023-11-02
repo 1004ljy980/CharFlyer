@@ -20,8 +20,14 @@ export async function GET() {
 
     const data = await Managements?.find({});
 
-    return data ? NextResponse.json(data[0]) : undefined;
+    return data ? NextResponse.json(data[0], { status: 200 }) : undefined;
   } catch (error) {
     console.error(error);
+    return NextResponse.json(
+      { message: `약관 받아오기에 실패하였습니다. ${error}` },
+      {
+        status: 500,
+      }
+    );
   }
 }

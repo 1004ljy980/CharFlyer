@@ -51,12 +51,18 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       return NextResponse.json(
         {
-          message: error,
+          message: `유저 데이터 로딩에 실패하였습니다. ${error}`,
         },
         { status: 500 }
       );
     }
   } catch (error) {
     console.error(error);
+    return NextResponse.json(
+      { message: `세션 연동에 실패하였습니다. ${error}` },
+      {
+        status: 500,
+      }
+    );
   }
 }

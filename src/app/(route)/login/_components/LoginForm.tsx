@@ -16,7 +16,6 @@ export default function LoginForm() {
 
     try {
       const response = await Fetcher.postLogin(formData);
-      console.log(response);
 
       if (response.status === 200) {
         alert('로그인 정보 확인');
