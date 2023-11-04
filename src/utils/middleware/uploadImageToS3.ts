@@ -1,5 +1,4 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { v4 as uuidv4 } from 'uuid';
 
 // AWS IAM Setting
 const AWS_S3_ACCESS_ID = process.env.AWS_S3_ACCESS_ID || '';
@@ -21,11 +20,14 @@ const client = new S3Client({
  * @param file 파일
  * @returns
  */
-const uploadImageToS3 = async (file: Blob, folder: string): Promise<string> => {
+const uploadImageToS3 = async (
+  file: Blob,
+  folder: string
+): Promise<string | unknown> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const key = `${folder}/${uuidv4()}_${file.name}`;
+    const key = `${folder}/${Date.now()}${file.name}`;
 
     const command = new PutObjectCommand({
       Bucket: AWS_S3_BUCKET,
@@ -39,7 +41,7 @@ const uploadImageToS3 = async (file: Blob, folder: string): Promise<string> => {
     return response.$metadata.httpStatusCode === 200
       ? `https://${AWS_S3_BUCKET}.s3.${AWS_S3_REGION}.amazonaws.com/${key}`
       : '';
-  } catch (error) {
+  } catch (error: unknown) {
     return error;
   }
 };

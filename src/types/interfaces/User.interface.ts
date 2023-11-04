@@ -21,4 +21,8 @@ export type TypeUser = Pick<
   | 'preferredTags'
 >;
 
+export type TypeCheckUser = {
+  isDuplication: boolean;
+};
+
 export type TypeAuthor = Pick<User, 'name' | 'profileImage'>;
