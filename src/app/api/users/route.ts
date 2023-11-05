@@ -48,7 +48,7 @@ export async function GET(request: Request) {
   }
 }
 
-// middleware.ts 를 거쳐와서 cookies에 `profileImage의 URL`과 `해시화 된 암호` 가 저장되어있다.
+// middleware.ts 를 거쳐와서 'imageUrl' 헤더에 URL이 저장되어있음.
 export async function POST(request: NextRequest) {
   try {
     const Users = await connectToDatabase();
@@ -78,7 +78,10 @@ export async function POST(request: NextRequest) {
       ...data,
     });
 
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json(
+      { message: '회원가입이 성공적으로 완료되었습니다.' },
+      { status: 201 }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json(

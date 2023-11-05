@@ -1,35 +1,15 @@
 import { TypeCheckUser, TypeUser } from '@/types/interfaces/User.interface';
 import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
 import { TypeManagementContent } from '@/types/interfaces/management.interface';
-import TypeResponse from '@/types/response';
 import API_ROUTES from './apiRoutes';
+import { get, post } from './easyFetch';
+import TypeResponse from '@/types/response';
 
 // 상수
 const protocol = 'http';
 const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 const PORT = process.env.NEXT_PUBLIC_PORT;
-
-// fetch 상수
 const URL = `${protocol}://${DOMAIN}:${PORT}/api`;
-const GET = {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
-const POST = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
-const POST_FORM = {
-  method: 'POST',
-  headers: {
-    // 'Content-Type': 'multipart/form-data'
-    // 해당 값은 encType에 의해 자동으로 지정될 것임.
-  },
-};
 
 /*
 introductionPosts
@@ -41,13 +21,12 @@ introductionPosts
  */
 export async function getIntroductionPostsList(
   page: number = 0
-): Promise<TypeIntroductionPostList[]> {
-  const response = await fetch(`${URL}${API_ROUTES.INTRODUCNTION_POSTS}`, {
-    ...GET,
+): Promise<TypeResponse<TypeIntroductionPostList[]>> {
+  const data = await get(URL, API_ROUTES.INTRODUCNTION_POSTS, '', {
     cache: 'no-store',
   });
 
-  return response.json();
+  return data;
 }
 
 /*
@@ -58,10 +37,12 @@ managements
  * 이용약관, 개인정보 수집 및 이용 동의 정보를 받아옵니다.
  * @returns Promise<TypeManagementContent>
  */
-export async function getManagement(): Promise<TypeManagementContent> {
-  const response = await fetch(`${URL}${API_ROUTES.MANAGEMENT}`, { ...GET });
+export async function getManagement(): Promise<
+  TypeResponse<TypeManagementContent>
+> {
+  const data = await get(URL, API_ROUTES.MANAGEMENT);
 
-  return response.json();
+  return data;
 }
 
 /*
@@ -74,37 +55,29 @@ export enum CheckParma {
 export async function checkUser(
   checkParma: CheckParma,
   param: string
-): Promise<TypeCheckUser & TypeResponse> {
-  const response = await fetch(
-    `${URL}${API_ROUTES.USERS}?${checkParma}=${param}`,
-    { ...GET }
-  );
+): Promise<TypeResponse<TypeCheckUser>> {
+  const params = `${checkParma}=${param}`;
+  const data = await get(URL, API_ROUTES.USERS, params);
 
-  return response.json();
+  return data;
 }
 
 export async function postUser(
   formData: FormData
-): Promise<TypeUser & TypeResponse> {
-  const response = await fetch(`${URL}${API_ROUTES.USERS}`, {
-    ...POST_FORM,
-    body: formData,
-  });
-  const data = await response.json();
+): Promise<TypeResponse<TypeUser>> {
+  const data = await post(URL, API_ROUTES.USERS, formData);
 
-  return { ...data, status: response.status };
+  return data;
 }
 
 /*
 session 로그인/로그아웃
 */
 
-export async function postLogin(formData: FormData): Promise<TypeResponse> {
-  const response = await fetch(`${URL}${API_ROUTES.SESSION}`, {
-    ...POST_FORM,
-    body: formData,
-  });
-  const data = await response.json();
+export async function postLogin(
+  formData: FormData
+): Promise<TypeResponse<object>> {
+  const data = await post(URL, API_ROUTES.SESSION, formData);
 
-  return { ...data, status: response.status };
+  return data;
 }

@@ -4,12 +4,13 @@ import RegisterForm from './_components/RegisterForm';
 import { getManagement } from '@/utils/api/Fetcher';
 
 export default async function Register() {
-  const managementContent = await getManagement();
+  const response = await getManagement();
+  const managementData = response.data;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>회원가입</h2>
-      <RegisterForm managementContent={managementContent} />
+      <RegisterForm managementContent={managementData} />
     </div>
   );
 }

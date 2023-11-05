@@ -20,7 +20,7 @@ export default function LoginForm() {
       if (response.status === 200) {
         alert('로그인 정보 확인');
       } else if (response.status === 500) {
-        alert(response.message);
+        alert(response.data.message);
       }
     } catch (error) {
       alert(error);

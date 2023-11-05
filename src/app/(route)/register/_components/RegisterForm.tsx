@@ -147,7 +147,7 @@ export default function RegisterForm({
           email
         );
 
-        response.isDuplication
+        response.data.isDuplication
           ? setCheckDuplicationEmail(false)
           : setCheckDuplicationEmail(true);
       } catch (error) {
@@ -203,7 +203,7 @@ export default function RegisterForm({
       try {
         const response = await Fetcher.checkUser(Fetcher.CheckParma.Name, name);
 
-        response.isDuplication
+        response.data.isDuplication
           ? setCheckDuplicationName(false)
           : setCheckDuplicationName(true);
       } catch (error) {
@@ -285,8 +285,9 @@ export default function RegisterForm({
         const response = await Fetcher.postUser(formData);
 
         // 성공할 때 성공 화면을 띄움
+        console.log(response);
         if (response.status === 201) setStep(FINISH_STEP);
-        else throw new Error(response.message);
+        else throw new Error(response.data.message);
       } catch (error) {
         console.error(error);
         alert('회원가입에 실패했습니다.');

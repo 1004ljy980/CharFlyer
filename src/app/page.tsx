@@ -29,7 +29,8 @@ const SearchBar = () => {
 
 export default async function Home() {
   // 추후에 4페이지(10개 * 4)를 받아들이고, 2페이지씩 위 아래 BannerSection에 각각 전달해야함.
-  const bannerData = await Fetcher.getIntroductionPostsList();
+  const response = await Fetcher.getIntroductionPostsList();
+  const bannerData = response.data;
 
   return (
     <main className={styles.main}>

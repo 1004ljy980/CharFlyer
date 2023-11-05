@@ -1,6 +1,6 @@
-type TypeResponse = {
+type TypeResponse<T> = {
+  data: T & { message: string };
   status: number;
-  message: string;
 };
 
 export default TypeResponse;
