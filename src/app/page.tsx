@@ -3,7 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 
 import Image from 'next/image';
 import BannerList from './_components/BannerList';
-import * as Fetcher from '@/utils/api/Fetcher';
+import * as Fetcher from '@/frontend/utils/api/Fetcher';
 import RecommendedList from './_components/RecommendedList';
 import './globals.css';
 

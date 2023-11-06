@@ -2,7 +2,7 @@ import styles from './page.module.scss';
 
 import LoginForm from './_components/LoginForm';
 import Link from 'next/link';
-import ROUTES from '@/constants/Routes';
+import ROUTES from '@/frontend/constants/Routes';
 
 export default async function Login() {
   return (

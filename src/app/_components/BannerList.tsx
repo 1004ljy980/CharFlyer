@@ -3,7 +3,7 @@
 import styles from './BannerList.module.scss';
 
 import { useState } from 'react';
-import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
+import { TypeIntroductionPostList } from '@/frontend/types/interfaces/introductionPost.interface';
 
 import Image from 'next/image';
 

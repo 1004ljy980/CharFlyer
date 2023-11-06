@@ -1,9 +1,11 @@
-import { TypeUser } from '@/types/interfaces/User.interface';
-import dbConnect from '@/utils/db/dbConnection';
-import User from '@/schemas/users.model';
+import { TypeUser } from '@/frontend/types/interfaces/User.interface';
+import dbConnect from '@/backend/utils/db/dbConnection';
+import User from '@/backend/schemas/users.model';
 import { Model } from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
+import { generatePassword } from '@/backend/utils/passwordBcrypt';
+
+const SALT_ROUNDS = 10;
 
 // 데이터베이스 연결
 async function connectToDatabase(): Promise<Model<TypeUser> | undefined> {
@@ -55,10 +57,9 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     // 비밀번호를 해시화 합니다.
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(
-      formData.get('password') as string,
-      saltRounds
+    const hashedPassword = await generatePassword(
+      SALT_ROUNDS,
+      formData.get('password') as string
     );
 
     // 프로필 이미지의 Url을 불러옵니다.

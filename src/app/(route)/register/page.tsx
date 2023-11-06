@@ -1,7 +1,7 @@
 import styles from './page.module.scss';
 
 import RegisterForm from './_components/RegisterForm';
-import { getManagement } from '@/utils/api/Fetcher';
+import { getManagement } from '@/frontend/utils/api/Fetcher';
 
 export default async function Register() {
   const response = await getManagement();

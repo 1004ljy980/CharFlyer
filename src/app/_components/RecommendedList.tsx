@@ -3,7 +3,7 @@
 import styles from './RecommendedList.module.scss';
 
 import Image from 'next/image';
-import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
+import { TypeIntroductionPostList } from '@/frontend/types/interfaces/introductionPost.interface';
 import { useState } from 'react';
 
 const AIRPLANE_AMOUNT = 3;

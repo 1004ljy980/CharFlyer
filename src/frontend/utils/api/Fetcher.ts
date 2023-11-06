@@ -1,9 +1,12 @@
-import { TypeCheckUser, TypeUser } from '@/types/interfaces/User.interface';
-import { TypeIntroductionPostList } from '@/types/interfaces/introductionPost.interface';
-import { TypeManagementContent } from '@/types/interfaces/management.interface';
+import {
+  TypeCheckUser,
+  TypeUser,
+} from '@/frontend/types/interfaces/User.interface';
+import { TypeIntroductionPostList } from '@/frontend/types/interfaces/introductionPost.interface';
+import { TypeManagementContent } from '@/frontend/types/interfaces/management.interface';
 import API_ROUTES from './apiRoutes';
 import { get, post } from './easyFetch';
-import TypeResponse from '@/types/response';
+import TypeResponse from '@/frontend/types/response';
 
 // 상수
 const protocol = 'http';

@@ -1,7 +1,7 @@
-import dbConnect from '@/utils/db/dbConnection';
+import dbConnect from '@/backend/utils/db/dbConnection';
 import { NextRequest, NextResponse } from 'next/server';
-import User from '@/schemas/users.model';
-import bcrypt from 'bcryptjs';
+import User from '@/backend/schemas/users.model';
+import { comparePassword } from '@/backend/utils/passwordBcrypt';
 
 async function connectToDatabase() {
   try {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
           { status: 500 }
         );
 
-      const compareResult = await bcrypt.compare(password, data[0].password);
+      const compareResult = await comparePassword(password, data[0].password);
 
       return compareResult
         ? NextResponse.json({}, { status: 200 })

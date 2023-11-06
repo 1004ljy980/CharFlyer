@@ -1,6 +1,6 @@
-import dbConnect from '@/utils/db/dbConnection';
+import dbConnect from '@/backend/utils/db/dbConnection';
 import { NextResponse } from 'next/server';
-import Management from '@/schemas/management.model';
+import Management from '@/backend/schemas/management.model';
 
 async function connectToDatabase() {
   try {

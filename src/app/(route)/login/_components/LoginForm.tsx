@@ -2,7 +2,7 @@
 
 import styles from './LoginForm.module.scss';
 
-import * as Fetcher from '@/utils/api/Fetcher';
+import * as Fetcher from '@/frontend/utils/api/Fetcher';
 
 export default function LoginForm() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {

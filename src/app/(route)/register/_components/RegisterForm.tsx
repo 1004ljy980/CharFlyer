@@ -6,13 +6,13 @@ import { GrFormDown } from 'react-icons/gr';
 
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { TypeManagementContent } from '@/types/interfaces/management.interface';
-import useDebounce from '@/utils/hooks/useDebounce';
+import { TypeManagementContent } from '@/frontend/types/interfaces/management.interface';
+import useDebounce from '@/frontend/utils/hooks/useDebounce';
 import { useRouter } from 'next/navigation';
-import encodeFileToBase64 from '@/utils/encodeFileToBase64';
-import * as Fetcher from '@/utils/api/Fetcher';
-import MIDDLEWARE from '@/constants/Middleware';
-import ROUTES from '@/constants/Routes';
+import encodeFileToBase64 from '@/frontend/utils/encodeFileToBase64';
+import * as Fetcher from '@/frontend/utils/api/Fetcher';
+import MIDDLEWARE from '@/backend/constants/Middleware';
+import ROUTES from '@/frontend/constants/Routes';
 
 const FIRST_STEP = 1;
 const SECOND_STEP = 2;
@@ -285,7 +285,6 @@ export default function RegisterForm({
         const response = await Fetcher.postUser(formData);
 
         // 성공할 때 성공 화면을 띄움
-        console.log(response);
         if (response.status === 201) setStep(FINISH_STEP);
         else throw new Error(response.data.message);
       } catch (error) {

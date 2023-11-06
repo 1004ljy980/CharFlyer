@@ -39,8 +39,6 @@ const UsersSchema = new Schema(
       type: Array<String>,
       validate: [
         (tags: Array<String>) => {
-          if (tags.length < 1) return false;
-
           const maxLength = 10;
           let isWrong = false;
 

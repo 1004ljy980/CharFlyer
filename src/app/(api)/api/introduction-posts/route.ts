@@ -1,9 +1,12 @@
-import dbConnect from '@/utils/db/dbConnection';
-import { AdjustTypes, adjustSequenceValue } from '@/schemas/counter.model';
+import dbConnect from '@/backend/utils/db/dbConnection';
+import {
+  AdjustTypes,
+  adjustSequenceValue,
+} from '@/backend/schemas/counter.model';
 import IntroductionPost, {
   TypeIntroductionPost,
-} from '@/schemas/introductionPosts.model';
-import User from '@/schemas/users.model';
+} from '@/backend/schemas/introductionPosts.model';
+import User from '@/backend/schemas/users.model';
 import { NextResponse } from 'next/server';
 
 async function connectToDatabase() {
@@ -50,11 +53,11 @@ export async function GET() {
 
     return NextResponse.json(modifiedData, { status: 200 });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { message: `게시글 받아오기에 실패하였습니다. ${error}` },
       { status: 500 }
     );
-    console.error(error);
   }
 }
 
