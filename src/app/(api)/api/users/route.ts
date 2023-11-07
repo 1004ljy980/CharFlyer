@@ -3,7 +3,7 @@ import dbConnect from '@/backend/utils/db/dbConnection';
 import User from '@/backend/schemas/users.model';
 import { Model } from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
-import { generatePassword } from '@/backend/utils/passwordBcrypt';
+import { generatePassword } from '@/backend/utils/passwordManager';
 
 const SALT_ROUNDS = 10;
 

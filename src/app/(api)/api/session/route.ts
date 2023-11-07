@@ -1,7 +1,8 @@
 import dbConnect from '@/backend/utils/db/dbConnection';
 import { NextRequest, NextResponse } from 'next/server';
 import User from '@/backend/schemas/users.model';
-import { comparePassword } from '@/backend/utils/passwordBcrypt';
+import { comparePassword } from '@/backend/utils/passwordManager';
+import { generateAccessToken } from '@/backend/utils/tokenManager';
 
 async function connectToDatabase() {
   try {
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
       );
 
     try {
-      const data = await Users?.find({ email: email });
+      const data = await Users?.findOne({ email: email }, '_id password');
       if (!data || data.length < 1)
         return NextResponse.json(
           {
@@ -40,10 +41,15 @@ export async function POST(request: NextRequest) {
           { status: 500 }
         );
 
-      const compareResult = await comparePassword(password, data[0].password);
+      const compareResult = await comparePassword(password, data.password);
 
       return compareResult
-        ? NextResponse.json({}, { status: 200 })
+        ? NextResponse.json(
+            {
+              accessToken: generateAccessToken(data._id),
+            },
+            { status: 200 }
+          )
         : NextResponse.json(
             { message: '비밀번호가 일치하지 않습니다.' },
             { status: 500 }
