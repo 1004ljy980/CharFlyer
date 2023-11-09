@@ -1,5 +1,6 @@
 'use client';
 
+import { setAccessToken } from '@/frontend/utils/accessTokenManager';
 import styles from './LoginForm.module.scss';
 
 import * as Fetcher from '@/frontend/utils/api/Fetcher';
@@ -18,7 +19,7 @@ export default function LoginForm() {
       const response = await Fetcher.postLogin(formData);
 
       if (response.status === 200) {
-        alert('로그인 정보 확인');
+        setAccessToken(response.data.accessToken);
       } else if (response.status === 500) {
         alert(response.data.message);
       }

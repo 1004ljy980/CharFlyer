@@ -2,7 +2,15 @@ import dbConnect from '@/backend/utils/db/dbConnection';
 import { NextRequest, NextResponse } from 'next/server';
 import User from '@/backend/schemas/users.model';
 import { comparePassword } from '@/backend/utils/passwordManager';
-import { generateAccessToken } from '@/backend/utils/tokenManager';
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from '@/backend/utils/tokenManager';
+
+const PROTOCOL = process.env.NEXT_PUBLIC_PROTOCOL;
+const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
+const REFRESH_EXPIRES_IN =
+  Number(process.env.JWT_REFRESH_EXPIRES_IN?.split('d')[0]) || 0;
 
 async function connectToDatabase() {
   try {
@@ -42,14 +50,26 @@ export async function POST(request: NextRequest) {
         );
 
       const compareResult = await comparePassword(password, data.password);
+      const userId = data._id;
+
+      const response = NextResponse.json(
+        {
+          accessToken: generateAccessToken(userId),
+        },
+        { status: 200 }
+      );
+      response.cookies.set({
+        name: 'refreshToken',
+        value: generateRefreshToken(userId),
+        maxAge: REFRESH_EXPIRES_IN * 60 * 60 * 24, // 1일 기준으로 곱함
+        path: '/',
+        httpOnly: true,
+        secure: PROTOCOL === 'https',
+        domain: DOMAIN,
+      });
 
       return compareResult
-        ? NextResponse.json(
-            {
-              accessToken: generateAccessToken(data._id),
-            },
-            { status: 200 }
-          )
+        ? response
         : NextResponse.json(
             { message: '비밀번호가 일치하지 않습니다.' },
             { status: 500 }

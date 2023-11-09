@@ -7,7 +7,7 @@ import IntroductionPost, {
   TypeIntroductionPost,
 } from '@/backend/schemas/introductionPosts.model';
 import User from '@/backend/schemas/users.model';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 async function connectToDatabase() {
   try {
@@ -21,7 +21,7 @@ async function connectToDatabase() {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const IntroductionPosts = await connectToDatabase();
     User;
@@ -61,7 +61,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const IntroductionPosts = await connectToDatabase();
     const data = await request.json();

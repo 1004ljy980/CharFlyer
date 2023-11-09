@@ -9,10 +9,10 @@ import { get, post } from './easyFetch';
 import TypeResponse from '@/frontend/types/response';
 
 // 상수
-const protocol = 'http';
+const PROTOCOL = process.env.NEXT_PUBLIC_PROTOCOL;
 const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 const PORT = process.env.NEXT_PUBLIC_PORT;
-const URL = `${protocol}://${DOMAIN}:${PORT}/api`;
+const URL = `${PROTOCOL}://${DOMAIN}:${PORT}/api`;
 
 /*
 introductionPosts
@@ -79,7 +79,7 @@ session 로그인/로그아웃
 
 export async function postLogin(
   formData: FormData
-): Promise<TypeResponse<object>> {
+): Promise<TypeResponse<{ accessToken: string }>> {
   const data = await post(URL, API_ROUTES.SESSION, formData);
 
   return data;

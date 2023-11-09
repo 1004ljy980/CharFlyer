@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-const secret = process.env.JWT_SECRET_KEY || '';
-const accessExpiresIn = process.env.JWT_ACCESS_EXPIRES_IN || '';
-const refreshExpiresIn = process.env.JWT_REFRESH_EXPIRES_IN || '';
+const SECRET = process.env.JWT_SECRET_KEY || '';
+const ACCESS_EXPIRES_IN = process.env.JWT_ACCESS_EXPIRES_IN || '0s';
+const REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '0s';
 
 // access Token 발급
 const generateAccessToken = (userId: string) => {
-  return jwt.sign({ userId: userId }, secret, {
+  return jwt.sign({ userId: userId }, SECRET, {
     algorithm: 'HS256', // 암호화 알고리즘
-    expiresIn: accessExpiresIn, // 유효기간
+    expiresIn: ACCESS_EXPIRES_IN, // 유효기간
   });
 };
 
@@ -16,7 +16,7 @@ const generateAccessToken = (userId: string) => {
 const verifyAccessToken = (token: string) => {
   let decoded: any = null;
   try {
-    decoded = jwt.verify(token, secret);
+    decoded = jwt.verify(token, SECRET);
     return {
       ok: true,
       userId: decoded.userId,
@@ -31,16 +31,16 @@ const verifyAccessToken = (token: string) => {
 
 // refresh Token 발급
 const generateRefreshToken = (userId: string) => {
-  return jwt.sign({ userId: userId }, secret, {
+  return jwt.sign({ userId: userId }, SECRET, {
     algorithm: 'HS256',
-    expiresIn: refreshExpiresIn, // 유효기간
+    expiresIn: REFRESH_EXPIRES_IN, // 유효기간
   });
 };
 
 // refresh Token 검증
 const verifyRefreshToken = (token: string) => {
   try {
-    jwt.verify(token, secret);
+    jwt.verify(token, SECRET);
     return true;
   } catch (error) {
     return false;

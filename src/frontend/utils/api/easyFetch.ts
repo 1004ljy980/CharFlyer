@@ -1,3 +1,5 @@
+import { getAccessToken } from '../accessTokenManager';
+
 // easyFetch header
 const header = {
   GET: {
@@ -24,12 +26,17 @@ export const easyFetch = async (
   url: string,
   route: string,
   header: TypeHeader,
-  params?: string,
+  params: string = '',
   options?: object
 ) => {
-  const response = await fetch(`${url}${route}?${params}`, {
+  const accessToken = getAccessToken();
+
+  const response = await fetch(`${url}${route}${params}`, {
     ...header,
     ...options,
+    headers: {
+      Authorization: accessToken ? `Bearer ${accessToken}` : ``,
+    },
   });
   const data = await response.json();
 
