@@ -2,9 +2,9 @@ import styles from './page.module.scss';
 import { BsSearch } from 'react-icons/bs';
 
 import Image from 'next/image';
-import BannerList from './components/BannerList';
-import * as Fetcher from '@/utils/api/Fetcher';
-import RecommendedList from './components/RecommendedList';
+import BannerList from './_components/BannerList';
+import * as Fetcher from '@/frontend/utils/api/Fetcher';
+import RecommendedList from './_components/RecommendedList';
 import './globals.css';
 
 // 데이터는 해당 page에서 받아들이고, 나머지 컴포넌트는 client component로 옮겨야 함.(이벤트 필요)
@@ -29,7 +29,8 @@ const SearchBar = () => {
 
 export default async function Home() {
   // 추후에 4페이지(10개 * 4)를 받아들이고, 2페이지씩 위 아래 BannerSection에 각각 전달해야함.
-  const bannerData = await Fetcher.getIntroductionPostsList();
+  const response = await Fetcher.getIntroductionPostsList();
+  const bannerData = response.data;
 
   return (
     <main className={styles.main}>
