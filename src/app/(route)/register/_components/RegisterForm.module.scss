@@ -1,0 +1,338 @@
+@use '@/app/_styles/themes.scss' as themes;
+
+$textAreaHieght: calc(themes.$fontSize * 10);
+
+.registerForm {
+  // 시작 전
+  .startContainer {
+    display: flex;
+    flex-direction: column;
+
+    .letsStartComment {
+      .airplaneBox {
+        position: relative;
+
+        width: 300px;
+        height: 150px;
+        margin: 0 auto;
+        margin-bottom: themes.$smallSpacing;
+
+        .floatingAirplane {
+          animation: floatingAirplane 5s infinite;
+        }
+      }
+      .commentBox {
+        padding: themes.$smallSpacing;
+        margin-bottom: themes.$midsizeSpacing;
+
+        p {
+          text-align: center;
+          font-size: themes.$subTitleFontSize;
+        }
+        p:nth-child(1) {
+          margin-bottom: themes.$smallSpacing;
+
+          font-weight: 200;
+        }
+        p:nth-child(2) {
+          font-weight: 300;
+        }
+      }
+    }
+    .startButton {
+      @include themes.buttonStyle;
+      width: 50%;
+
+      margin: 0 auto;
+      padding: themes.$tinySpacing;
+
+      font-size: themes.$contentFontSize;
+    }
+  }
+
+  // 진행도
+  .registerStep {
+    width: 80%;
+    margin: 0 auto;
+
+    margin-bottom: themes.$mediumSpacing;
+    .stepBar {
+      height: 8px;
+      margin-bottom: themes.$tinySpacing;
+
+      border-radius: 8px;
+      background-color: themes.$borderColor;
+
+      .stepPointer {
+        width: 33.33%;
+        height: 100%;
+
+        border-radius: inherit;
+        background-color: themes.$grayColor;
+
+        transition: transform 500ms;
+      }
+      .firstStep {
+        transform: translateX(0%);
+      }
+      .secondStep {
+        transform: translateX(100%);
+      }
+      .finishStep {
+        transform: translateX(200%);
+      }
+    }
+    .stepBox {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+
+  // 약관동의
+  .checkContainer {
+    .checkList {
+      margin-bottom: themes.$mediumSpacing;
+
+      color: themes.$fontColor;
+
+      .allCheck {
+        padding-bottom: themes.$smallSpacing;
+
+        border-bottom: 1px solid themes.$borderColor;
+
+        font-weight: 500;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        padding: 0 themes.$smallSpacing;
+        margin-bottom: themes.$smallSpacing;
+
+        .downLogo {
+          margin-left: auto;
+        }
+      }
+      li:nth-child(n + 3) {
+        cursor: pointer;
+      }
+      textarea {
+        flex-basis: 100%;
+        flex-grow: 1;
+
+        height: $textAreaHieght;
+        margin-top: themes.$tinySpacing;
+        margin-left: calc(
+          themes.$smallSpacing/2 + themes.$contentFontSize +
+            themes.$tinySpacing/2
+        );
+        padding: 0 themes.$smallSpacing;
+        border: 1px solid themes.$grayColor;
+
+        color: themes.$fontColor;
+
+        animation: openTextArea 500ms;
+      }
+      input {
+        width: themes.$contentFontSize;
+        height: themes.$contentFontSize;
+        margin-right: themes.$tinySpacing;
+      }
+    }
+    .agreeButton {
+      @include themes.buttonStyle;
+      display: block;
+
+      width: 50%;
+      margin: 0 auto;
+      padding: themes.$tinySpacing;
+
+      font-size: themes.$contentFontSize;
+    }
+  }
+
+  // 정보입력
+  .informationForm {
+    display: flex;
+    flex-direction: column;
+
+    color: themes.$grayColor;
+
+    p {
+      margin-bottom: themes.$tinySpacing;
+    }
+    .redOutline {
+      outline: themes.$redColor solid 1px;
+    }
+    .greenOutline {
+      outline: themes.$greenColor solid 1px;
+    }
+    .notification {
+      color: themes.$redColor;
+      font-size: themes.$smallFontSize;
+    }
+    .inputBox {
+      margin-bottom: themes.$tinySpacing;
+    }
+    .profileBox {
+      display: flex;
+      align-items: flex-end;
+
+      margin-bottom: themes.$tinySpacing;
+      .profileImageBox {
+        position: relative;
+
+        width: 150px;
+        height: 150px;
+        margin-right: themes.$tinySpacing;
+        border-radius: 100%;
+        overflow: hidden;
+
+        background-color: themes.$subColor;
+
+        .profileImage {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .profileUploadButton {
+        @include themes.buttonStyle;
+
+        padding: themes.$microSpacing themes.$tinySpacing;
+        font-size: themes.$linkFontSize;
+      }
+    }
+    @include themes.inputStyle;
+    .titleLine {
+      display: flex;
+
+      span {
+        padding-right: themes.$smallTextSpacing; /* 오른쪽에 border를 위한 여백 */
+      }
+
+      &::after {
+        flex: 1;
+        position: relative;
+        top: calc(themes.$fontSize / 2);
+        height: 1px; /* 가로 줄의 두께 */
+        background-color: themes.$borderColor; /* 가로 줄의 색상 */
+
+        content: '';
+      }
+    }
+    .tagsBox {
+      display: flex;
+
+      margin-bottom: themes.$mediumSpacing;
+      gap: themes.$tinySpacing;
+      .inputBox {
+        margin-bottom: 0;
+      }
+    }
+    .registerButton {
+      @include themes.buttonStyle;
+      width: 50%;
+
+      margin: 0 auto;
+      padding: themes.$tinySpacing;
+
+      font-size: themes.$contentFontSize;
+    }
+  }
+
+  // 가입완료
+  .finishContainer {
+    display: flex;
+    flex-direction: column;
+
+    .finishComment {
+      .airplaneBox {
+        position: relative;
+
+        width: 300px;
+        height: 180px;
+        margin: themes.$smallSpacing auto;
+
+        .congratsAirplane {
+          animation: congrats 800ms;
+          align-self: center;
+        }
+      }
+      .commentBox {
+        padding: themes.$midsizeSpacing;
+
+        p {
+          text-align: center;
+
+          span {
+            font-weight: 400;
+            color: themes.$mainColor;
+          }
+        }
+        p:nth-child(1) {
+          margin-bottom: themes.$midsizeSpacing;
+
+          font-size: themes.$titleFontSize2;
+          font-weight: 300;
+        }
+        p:nth-child(n + 2) {
+          font-size: themes.$subTitleFontSize;
+          font-weight: 200;
+        }
+      }
+    }
+    .loginButton {
+      @include themes.buttonStyle;
+      width: 50%;
+
+      margin: 0 auto;
+      padding: themes.$tinySpacing;
+
+      font-size: themes.$contentFontSize;
+    }
+  }
+}
+
+@keyframes floatingAirplane {
+  from {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes openTextArea {
+  from {
+    height: 0;
+  }
+  to {
+    height: $textAreaHieght;
+  }
+}
+
+@keyframes congrats {
+  from {
+    transform: scale(0.8);
+  }
+  20% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}

@@ -13,7 +13,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 
 // 상수
-import ROUTES from '@/constants/Routes';
+import ROUTES from '@/frontend/constants/Routes';
 
 export const metadata: Metadata = {
   title: '캐플라이어',
@@ -66,7 +66,10 @@ export default function RootLayout({
                   </Link>
                 </li>
                 <li>
-                  <Link className={styles.registerLink} href={`${ROUTES.REGISTER}`}>
+                  <Link
+                    className={styles.registerLink}
+                    href={`${ROUTES.REGISTER}`}
+                  >
                     회원가입
                   </Link>
                 </li>

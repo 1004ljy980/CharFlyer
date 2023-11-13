@@ -1,0 +1,78 @@
+@use '@/app/_styles/themes.scss' as themes;
+
+.container {
+  max-width: themes.$smallContentMaxWidth;
+  margin: themes.$largeSpacing auto;
+
+  .title {
+    font-size: themes.$titleFontSize2;
+    text-align: center;
+    font-weight: 600;
+  }
+  .loginFormContainer {
+    margin-top: themes.$mediumSpacing;
+  }
+  .registerButtonContainer {
+    .registerTitle {
+      display: flex;
+
+      width: 85%;
+      margin: themes.$midsizeSpacing auto;
+      padding: 0;
+
+      color: themes.$grayColor;
+      text-align: center;
+
+      &::before {
+        flex: 1;
+        position: relative;
+        top: calc(themes.$fontSize / 2);
+
+        height: 1px; /* 가로 줄의 두께 */
+        margin-right: themes.$tinySpacing;
+        background-color: themes.$borderColor; /* 가로 줄의 색상 */
+
+        content: '';
+      }
+
+      &::after {
+        flex: 1;
+        position: relative;
+        top: calc(themes.$fontSize / 2);
+
+        height: 1px; /* 가로 줄의 두께 */
+        margin-left: themes.$tinySpacing;
+        background-color: themes.$borderColor; /* 가로 줄의 색상 */
+
+        content: '';
+      }
+    }
+    .registerButtonContainer {
+      display: flex;
+      justify-content: center;
+
+      .emailRegisterButtonBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: calc(themes.$subTitleFontSize * 2.25);
+        height: calc(themes.$subTitleFontSize * 2.25);
+
+        border-radius: 100%;
+        background-color: themes.$grayColor;
+
+        font-size: themes.$subTitleFontSize;
+        color: themes.$whiteColor;
+        text-decoration: 0;
+
+        span {
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+      }
+    }
+  }
+}
